@@ -1,0 +1,24 @@
+{
+  "title": "图片管理",
+  "id": "Images",
+  "data": [
+    {
+      "src": "../resources/images/2.jpg"
+    },
+    {
+      "src": "../resources/images/3.jpg"
+    },
+    {
+      "src": "../resources/images/4.jpg"
+    },
+    {
+      "src": "../resources/images/5.jpg"
+    },
+    {
+      "src": "../resources/images/6.jpg"
+    },
+    {
+      "src": "../resources/images/7.jpg"
+    }
+  ]
+}

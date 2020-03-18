@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+</head>
+<body>
+<div class="layui-btn-container" style="margin:50px 0 20px 20px ">
+    <a href="/flat/toAddFlatInfo"><button type="button" class="layui-btn layui-btn-normal layui-btn-radius" >新增房屋信息</button></a>
+</div>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+<script type="text/html" id="barDemo">
+    {{#  if(d.state==1){ }}
+    <a class="layui-btn layui-btn-normal layui-btn-xs"  lay-event="bind">业主绑定</a>
+    {{#  } }}
+      {{#  if(d.state==0){ }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" name="unbind" lay-event="unbind">业主解绑</a>
+    {{#  } }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs"  lay-event="del">删除</a>
+</script>
+<script src="../../resources/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.use(['table','jquery','layer','form'], function(){
+        var table = layui.table;
+        var layer = layui.layer;
+        var $=layui.jquery
+        var form=layui.form
+        form.on("submit(mod)",function(data){
+            $.post("/Owner/modOwner",data.field,function(res){
+                if(rs.code != 1){
+                    layer.msg(res.msg);
+                }else{
+                    layer.msg(res.msg);
+                    location.href="/page/Owners/OwnerInfo.html";
+                }
+            })})
+        var tabl=table.render({
+            elem: '#test'
+            ,url:'/flat/flatInfoList'
+            ,title: '房屋信息'
+            ,cols: [
+                [
+                ,{field:'id', title:'ID',  fixed: 'left' ,align:'center'}
+                ,{field:'block', title:'楼栋' ,fixed: 'left',align:'center'}
+                ,{field:'unit', title:'单元',  fixed: 'left',align:'center'}
+                ,{field:'floor', title:'楼层'  ,fixed: 'left',align:'center'}
+                ,{field:'room', title:'房间' ,fixed: 'left',align:'center'}
+                ,{field:'no', title:'房间编号',  fixed: 'left',align:'center'}
+                ,{field:'space', title:'建筑面积' ,fixed: 'left' ,align:'center'}
+                ,{field:'layout', title:'户型' ,fixed: 'left',align:'center'}
+                ,{field:'state', title:'房屋状态' ,templet:"#state",fixed: 'left',align:'center'}
+                ,{title:'操作', toolbar: '#barDemo',width:300,align:'center'}
+            ]
+                ],page:true
+        }
+        );
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            console.log(JSON.stringify(data))
+
+            if(obj.event === 'del'){
+                deleteNotice(data)
+            }
+            if(obj.event === 'bind'){
+
+            }
+            if(obj.event === 'unbind'){
+                unbind(data)
+            }
+        });
+        function deleteNotice(data){
+            layer.confirm('你确定要删除房间编号为【'+data.no+'】的房屋信息吗?', {icon: 3, title:'提示'}, function(index){
+                $.post("/flat/delFlat",{id:data.id},function(res){
+                    layer.msg(res.msg);
+                })
+                layer.close(index);
+                tabl.reload();
+            });
+        }
+        function unbind(data){
+                layer.confirm('你确定要解除房间编号为【'+data.no+'】的业主绑定信息吗?', {icon: 3, title:'提示'}, function(index){
+                    $.post("/flat/unBindFlat",{ownerid:data.ownerid},function(res){
+                        layer.msg(res.msg);
+                    })
+                    layer.close(index);
+                    tabl.reload();
+                });
+        }
+        })
+
+
+</script>
+<script type="text/html" id="state">
+    {{# if (d.state==0) { }}
+    <span>已售</span>
+    {{# } else if(d.state==1) { }}  
+    <span>待售</span>
+    {{# }}}  
+</script>
+</body>
+</html>

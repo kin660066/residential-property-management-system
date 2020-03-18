@@ -1,0 +1,222 @@
+{
+  "contentManagement": [
+    {
+      "title": "业主管理",
+      "icon": "&#xe612;",
+      "spread": false,
+      "children": [
+        {
+          "title": "业主信息",
+          "icon": "&#xe612;",
+          "href": "page/Owners/OwnerInfo.html",
+          "spread": false
+        },
+        {
+          "title": "业主成员",
+          "icon": "&#xe613;",
+          "href": "page/Owners/OwnerInfo2.html",
+          "spread": false
+        }
+      ]
+    },
+    {
+      "title": "房屋信息管理 ",
+      "icon": "icon-text",
+      "spread": false,
+      "children": [
+        {
+          "title": "房屋管理",
+          "icon": "&#xe656;",
+          "href": "page/flat/flatInfo.html",
+          "spread": false
+        },
+        {
+          "title": "业主房屋管理",
+          "icon": "&#xe609;",
+          "href": "page/login/login.html",
+          "spread": false
+        }
+      ]
+    },
+    {
+      "title": "缴费管理",
+      "icon": "&#xe65e;",
+      "href": "page/news/newsList.html",
+      "spread": false,
+      "children": [
+        {
+          "title": "缴费项目项",
+          "icon": "&#xe61c;",
+          "href": "page/404.html",
+          "spread": false
+        },
+        {
+          "title": "缴费明细",
+          "icon": "&#xe609;",
+          "href": "page/login/login.html",
+          "spread": false
+        }
+      ]
+    },{
+      "title": "车位管理",
+      "icon": "icon-text",
+      "href": "page/news/newsList.html",
+      "spread": false,
+      "children": [
+        {
+          "title": "车位信息",
+          "icon": "&#xe61c;",
+          "href": "page/404.html",
+          "spread": false
+        },
+        {
+          "title": "车位绑定",
+          "icon": "&#xe609;",
+          "href": "page/login/login.html",
+          "spread": false
+        }
+      ]
+    },{
+      "title": "公共设备管理",
+      "icon": "icon-text",
+      "href": "page/news/newsList.html",
+      "spread": false,
+      "children": [
+        {
+          "title": "公共设备信息",
+          "icon": "&#xe61c;",
+          "href": "page/404.html",
+          "spread": false
+        }
+      ]
+    },{
+      "title": "公告管理",
+      "icon": "icon-text",
+      "href": "page/news/newsList.html",
+      "spread": false,
+      "children": [
+        {
+          "title": "公告发布",
+          "icon": "&#xe61c;",
+          "href": "page/404.html",
+          "spread": false
+        },
+        {
+          "title": "历史公共",
+          "icon": "&#xe609;",
+          "href": "page/login/login.html",
+          "spread": false
+        }
+      ]
+    },{
+      "title": "系统设置",
+      "icon": "&#xe614;",
+      "href": "page/news/newsList.html",
+      "spread": false,
+      "children": [
+        {
+          "title": "管理员管理",
+          "icon": "&#xe61c;",
+          "href": "page/404.html",
+          "spread": false
+        }
+      ]
+    },{
+      "title": "信息管理",
+      "icon": "icon-text",
+      "href": "page/news/newsList.html",
+      "spread": false,
+      "children": [
+        {
+          "title": "申请消息",
+          "icon": "&#xe61c;",
+          "href": "page/404.html",
+          "spread": false
+        },
+        {
+          "title": "投诉信息",
+          "icon": "&#xe609;",
+          "href": "page/login/login.html",
+          "spread": false
+        }
+      ]
+    },{
+      "title": "房屋管理",
+      "icon": "icon-text",
+      "href": "page/news/newsList.html",
+      "spread": false,
+      "children": [
+        {
+          "title": "房屋信息",
+          "icon": "&#xe61c;",
+          "href": "page/404.html",
+          "spread": false
+        },
+        {
+          "title": "申请业主成员",
+          "icon": "&#xe609;",
+          "href": "page/login/login.html",
+          "spread": false
+        }
+      ]
+    },{
+      "title": "车位管理",
+      "icon": "icon-text",
+      "href": "page/news/newsList.html",
+      "spread": false,
+      "children": [
+        {
+          "title": "车位信息",
+          "icon": "&#xe61c;",
+          "href": "page/404.html",
+          "spread": false
+        }
+      ]
+    },{
+      "title": "查看公告",
+      "icon": "&#xe62a;",
+      "href": "page/news/newsList.html",
+      "spread": false
+    },{
+      "title": "报修申请 ",
+      "icon": "icon-text",
+      "href": "page/news/newsList.html",
+      "spread": false,
+      "children": [
+        {
+          "title": "投诉申请",
+          "icon": "&#xe61c;",
+          "href": "page/404.html",
+          "spread": false
+        }]
+    },{
+      "title": "添加来访车辆",
+      "icon": "icon-text",
+      "href": "page/news/newsList.html",
+      "spread": false
+    },{
+      "title": "查询业主车位",
+      "icon": "icon-text",
+      "href": "page/news/newsList.html",
+      "spread": false
+    },{
+      "title": "车位信息",
+      "icon": "icon-text",
+      "href": "page/news/newsList.html",
+      "spread": false
+    },{
+      "title": "查看公告",
+      "icon": "icon-text",
+      "href": "page/news/newsList.html",
+      "spread": false
+    },{
+      "title": "消息",
+      "icon": "icon-text",
+      "href": "page/news/newsList.html",
+      "spread": false
+    }
+  ]
+
+}
+
+

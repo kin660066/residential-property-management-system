@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+</head>
+<body>
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">查看家属</a>
+</script>
+<script src="../../resources/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.use(['table','jquery','layer','form'], function(){
+        var table = layui.table;
+        var $=layui.jquery
+            table.render({
+            elem: '#test'
+            ,url:'/Owner/OwnerList'
+            ,title: '业主信息'
+            ,cols: [[
+                ,{field:'id', title:'ID',  fixed: 'left',align:'center'}
+                ,{field:'username', title:'姓名' ,fixed: 'left',align:'center'}
+                ,{field:'address', title:'地址' ,fixed: 'left' ,align:'center'}
+                ,{field:'age', title:'年龄' ,fixed: 'left',align:'center'}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+            ]],page:true
+        }
+        );
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'edit'){
+                console.log("fasong")
+                location.href="/Owner/toOwnerRe?id="+data.id
+            }
+        });
+        });
+
+
+</script>
+<script type="text/html" id="sex">
+        {{# if (d.sex==0) { }}
+         		  <span>男</span>
+        {{# } else if(d.sex==1) { }}  
+        <span>女</span>
+        {{# }}}  
+</script>
+<script type="text/html" id="type">
+    {{# if (d.type==0) { }}
+     		  <span>业主</span>
+    {{# } else if(d.type==1) { }}  
+    <span>管理员</span>
+    {{# } else if(d.type==2) { }}  
+    <span>保安</span>
+    {{# }}}  
+</script>
+</body>
+</html>
