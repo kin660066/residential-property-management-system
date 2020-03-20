@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
@@ -108,7 +107,7 @@ public class OwnerListController {
     /**
      * 挑战业主家属页面
      * @param id
-     * @param session
+     * @param
      * @return
      */
     @RequestMapping("/toOwnerRe")
@@ -129,7 +128,7 @@ public class OwnerListController {
     @RequestMapping("/ownerReList")
     public DataGridView ownerReList(@RequestParam("page")int pageIndex,
                                   @RequestParam("limit")int pageSize,HttpSession session){
-        int id = (int) session.getAttribute("rid");
+        int id =(int)session.getAttribute("rid");
         IPage<UserFamily> page = new Page<>(pageIndex,pageSize);
         QueryWrapper<UserFamily> wrapper=new QueryWrapper<>();
         wrapper.eq("userRelateId",id);

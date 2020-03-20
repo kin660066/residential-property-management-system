@@ -7,31 +7,31 @@
 </head>
 <body>
 <div class="layui-btn-container" style="margin:50px 0 20px 20px ">
-    <a href="/Owner/toAddOwner"><button type="button" class="layui-btn layui-btn-normal layui-btn-radius" >新增业主</button></a>
+    <a href="/Owner/toAddFacility"><button type="button" class="layui-btn layui-btn-normal layui-btn-radius" >新增公共设备</button></a>
 </div>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <div id="modDiv" style="display: none;margin: 10px">
     <form class="layui-form"  style="margin-top: 20px;margin-left:35%;">
         <div class="layui-form-item">
-            <label class="layui-form-label">账号</label>
+            <label class="layui-form-label">ID</label>
             <div class="layui-input-block" style="width: 300px">
-                <input type="text" name="account" readonly placeholder="请输入账号" class="layui-input" autocomplete="off">
+                <input type="text" name="id" readonly placeholder="" class="layui-input" autocomplete="off">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">密码</label>
+            <label class="layui-form-label">公共设备</label>
             <div class="layui-input-block" style="width: 300px">
-                <input type="text" name="password"   placeholder="请输入密码" class="layui-input" autocomplete="off">
+                <input type="text" name="facility"   placeholder="请输入公共设备" class="layui-input" autocomplete="off">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">姓名</label>
+            <label class="layui-form-label">区域</label>
             <div class="layui-input-block" style="width: 300px">
-                <input type="text" name="username"  readonly placeholder="请输入姓名" class="layui-input" autocomplete="off">
+                <input type="text" name="area"  readonly placeholder="请输入区域" class="layui-input" autocomplete="off">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">性别</label>
+            <label class="layui-form-label">state</label>
             <div class="layui-input-block" style="width: 300px">
                 <input type="radio" name="sex" value="0" title="男" checked="" autocomplete="off">
                 <input type="radio" name="sex" value="1" title="女" autocomplete="off">

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
 </head>
 <body>
-<input type="hidden" th:text="${#request.getAttribute('id')}" id="id"/>
+<input type="hidden" th:value="${#request.getAttribute('rid')}" id="aid"/>
 <div class="layui-btn-container" style="margin:50px 0 20px 20px ">
     <a href="/Owner/toAddOwnerRe"><button type="button" class="layui-btn layui-btn-normal layui-btn-radius" >添加家属关系</button></a>
 </div>
@@ -67,6 +67,7 @@
         var table = layui.table;
         var layer = layui.layer;
         var $=layui.jquery
+        var id = $("#aid").val()
         var tabl=table.render({
                 elem: '#test'
                 ,url:'/Owner/ownerReList'

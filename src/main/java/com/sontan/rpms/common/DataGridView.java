@@ -17,4 +17,8 @@ public class DataGridView {
         this.count = count;
         this.data = data;
     }
+
+    public DataGridView(Object data) {
+        this.data = data;
+    }
 }

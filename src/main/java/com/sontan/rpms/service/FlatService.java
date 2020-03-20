@@ -17,4 +17,6 @@ import org.springframework.stereotype.Service;
 public interface FlatService extends IService<Flat> {
 
     Page<FlatVo> getFlatVo(Page<FlatVo> page);
+
+
 }

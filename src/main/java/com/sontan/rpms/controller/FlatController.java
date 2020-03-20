@@ -2,15 +2,15 @@ package com.sontan.rpms.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sontan.rpms.common.DataGridView;
 import com.sontan.rpms.common.ResultObj;
+import com.sontan.rpms.dao.FlatMapper;
 import com.sontan.rpms.entity.Flat;
-import com.sontan.rpms.entity.UserFamily;
+import com.sontan.rpms.entity.User;
 import com.sontan.rpms.service.FlatLayoutService;
 import com.sontan.rpms.service.FlatService;
-import com.sontan.rpms.utils.CardUtil;
+import com.sontan.rpms.service.UserService;
 import com.sontan.rpms.utils.RoomNoUtil;
 import com.sontan.rpms.vo.FlatVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,7 +30,8 @@ public class FlatController {
     FlatService flatService;
     @Autowired
     FlatLayoutService flatLayoutService;
-
+    @Autowired
+    UserService userService;
     /**
      * 加载房屋信息
      * @param pageIndex
@@ -104,5 +106,33 @@ public class FlatController {
             return ResultObj.UNBIND_SUCCESS;
         }
         return ResultObj.UNBIND_ERROR;
+    }
+
+    @RequestMapping("toBindFlat")
+    public String toBindFlat(String no, HttpServletRequest request){
+        System.out.println(no);
+        request.setAttribute("no",no);
+        return "/page/flat/bindFlat.html";
+    }
+    @ResponseBody
+    @RequestMapping("/searchOwner")
+    public DataGridView searchOwner(){
+        QueryWrapper<User> wrapper = new QueryWrapper<User>();
+        wrapper.select("username");
+        List<User> list =userService.list(wrapper);
+        return  new DataGridView(list);
+    }
+
+    @ResponseBody
+    @RequestMapping("/addBindFlat")
+    public ResultObj addBindFlat(String no,String owner){
+        QueryWrapper<User> wrapper=new QueryWrapper<>();
+        wrapper.eq("username",owner);
+        User user=userService.getOne(wrapper);
+        UpdateWrapper<Flat> wrapper1 = new UpdateWrapper();
+        wrapper1.set("ownerid",user.getId()).set("state",0).eq("no",no);
+        if(flatService.update(wrapper1)){
+        return ResultObj.BIND_SUCCESS;}
+        return ResultObj.BIND_ERROR;
     }
 }

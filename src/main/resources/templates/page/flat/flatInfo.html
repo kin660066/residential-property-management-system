@@ -63,7 +63,7 @@
                 deleteNotice(data)
             }
             if(obj.event === 'bind'){
-
+                bind(data)
             }
             if(obj.event === 'unbind'){
                 unbind(data)
@@ -86,6 +86,9 @@
                     layer.close(index);
                     tabl.reload();
                 });
+        }
+        function bind(data){
+            location.href="/flat/toBindFlat?no="+data.no
         }
         })
 

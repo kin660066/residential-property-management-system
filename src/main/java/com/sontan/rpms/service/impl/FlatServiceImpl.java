@@ -22,4 +22,6 @@ public class FlatServiceImpl extends ServiceImpl<FlatMapper, Flat> implements Fl
     public Page<FlatVo> getFlatVo(Page<FlatVo> page) {
         return page.setRecords(this.baseMapper.getFlatVo(page));
     }
+
+
 }
