@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
 </head>
 <body>
-<input type="hidden" th:value="${#request.getAttribute('rid')}" id="aid"/>
 <div class="layui-btn-container" style="margin:50px 0 20px 20px ">
     <a href="/Owner/toAddOwnerRe"><button type="button" class="layui-btn layui-btn-normal layui-btn-radius" >添加家属关系</button></a>
 </div>
@@ -34,8 +33,10 @@
         <div class="layui-form-item">
             <label class="layui-form-label">性别</label>
             <div class="layui-input-block" style="width: 300px">
-                <input type="radio" name="sex" value="0" title="男" checked="" autocomplete="off">
-                <input type="radio" name="sex" value="1" title="女" autocomplete="off">
+                <select name="sex" id="aa" >
+                    <option value="0">男</option>
+                    <option value="1">女</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -67,14 +68,27 @@
         var table = layui.table;
         var layer = layui.layer;
         var $=layui.jquery
-        var id = $("#aid").val()
+        var form =layui.form
+        form.on("submit(mod)",function(data){
+            console.log("data.field"+JSON.stringify(data.field))
+            $.ajaxSettings.async = false;
+            $.post("/Owner/modOwnerRe",data.field,function(rs){
+                console.log(rs)
+                if(rs.code != 1){
+                    layer.msg(rs.msg);
+                }else{
+                    layer.msg(rs.msg);
+                    top.location.href='http://localhost:8080/index.html'; //3
+                }
+            })})
+            $.ajaxSettings.async = true;
         var tabl=table.render({
                 elem: '#test'
                 ,url:'/Owner/ownerReList'
                 ,title: '业主信息'
                 ,cols: [
                     [
-                    ,{field:'userrelateid', title:'业主ID',width:100,  fixed: 'left',align:'center'}
+                    {field:'userrelateid', title:'业主ID',width:100,  fixed: 'left',align:'center'}
                     ,{field:'id', title:'家属ID' ,fixed: 'left',align:'center'}
                     ,{field:'relationship', title:'关系',  fixed: 'left',align:'center'}
                     ,{field:'phone', title:'电话' ,fixed: 'left',align:'center'}
@@ -102,6 +116,7 @@
                         $("[name='sex']").val(data.sex);
                         $("[name='phone']").val(data.phone);
                         $("[name='name']").val(data.name);
+                        form.render()
                     }}
                 )
             }
@@ -119,7 +134,6 @@
                 tabl.reload();
             });
         }
-        window.onload=tabl.reload();
     });
 
 

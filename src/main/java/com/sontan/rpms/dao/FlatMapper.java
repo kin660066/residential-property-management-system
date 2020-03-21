@@ -18,5 +18,6 @@ import java.util.List;
 public interface FlatMapper extends BaseMapper<Flat> {
     @Select("SELECT flat_info.*,flat_layout.layout from flat_info ,flat_layout  where flat_info.layoutid=flat_layout.id")
     List<FlatVo> getFlatVo(IPage<FlatVo> page);
-
+    @Select("SELECT flat_info.*,flat_layout.layout from flat_info ,flat_layout  where flat_info.layoutid=flat_layout.id and flat_info.ownerid= #{ownerid}")
+    List<FlatVo> getFlatVo1(IPage<FlatVo> page,Integer ownerid);
 }

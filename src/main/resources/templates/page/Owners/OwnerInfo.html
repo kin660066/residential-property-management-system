@@ -33,8 +33,10 @@
         <div class="layui-form-item">
             <label class="layui-form-label">性别</label>
             <div class="layui-input-block" style="width: 300px">
-                <input type="radio" name="sex" value="0" title="男" checked="" autocomplete="off">
-                <input type="radio" name="sex" value="1" title="女" autocomplete="off">
+                <select name="sex" id="aa" >
+                    <option value="0">男</option>
+                    <option value="1">女</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -86,20 +88,24 @@
         var $=layui.jquery
         var form=layui.form
         form.on("submit(mod)",function(data){
-            $.post("/Owner/modOwner",data.field,function(res){
+            console.log($("[name='sex']").val())
+            $.ajaxSettings.async = false;
+            $.post("/Owner/modOwner",data.field,function(rs){
                 if(rs.code != 1){
                     layer.msg(res.msg);
                 }else{
                     layer.msg(res.msg);
                     location.href="/page/Owners/OwnerInfo.html";
+                    form.render()
                 }
             })})
+        $.ajaxSettings.async = true;
         var tabl=table.render({
             elem: '#test'
             ,url:'/Owner/OwnerList'
             ,title: '业主信息'
             ,cols: [[
-                ,{field:'id', title:'ID',  fixed: 'left',align:'center'}
+                {field:'id', title:'ID',  fixed: 'left',align:'center'}
                 ,{field:'account', title:'用户名' ,fixed: 'left',align:'center'}
                 ,{field:'password', title:'密码',  fixed: 'left',align:'center'}
                 ,{field:'username', title:'姓名' ,fixed: 'left',align:'center'}
@@ -118,25 +124,29 @@
         table.on('tool(test)', function(obj){
             var data = obj.data;
             if(obj.event === 'edit'){
-                layer.open({
+              var index =  layer.open({
                 type:1,
                 content:$("#modDiv"),
                 area:['800px','600px'],
                     cancel: function(){
-                        layer.close(1);
+                        layer.closeAll()
                     },
                     success:function(){
+                    console.log($("[name='sex']").find("option[value = '"+data.sex+"']"))
+                    console.log(data)
                             $("[name='account']").val(data.account);
                             $("[name='password']").val(data.password);
                             $("[name='username']").val(data.username);
-                            $("[name='sex']").val(data.sex);
+                            $("[name='sex']").find("option[value = '"+data.sex+"']").attr("selected","selected")
                             $("[name='phone']").val(data.phone);
                             $("[name='address']").val(data.address);
                             $("[name='createby']").val(data.createby);
                             $("[name='card']").val(data.card);
+                            form.render()
                         }}
             )
             }
+            console.log(index)
             if(obj.event === 'del'){
                     console.log(JSON.stringify(data))
                 deleteNotice(data)

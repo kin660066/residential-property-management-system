@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+</head>
+<body>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button type="button" class="layui-btn layui-btn-sm" lay-event="getCheckData"><i class="layui-icon"></i></button>
+    </div>
+</script>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+<div id="modDiv" style="display: none;margin: 10px">
+    <form class="layui-form"  style="margin-top: 20px;margin-left:35%;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">ID</label>
+            <div class="layui-input-block" style="width: 300px">
+                <input type="text" name="id" readonly placeholder="" class="layui-input" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+        <label class="layui-form-label">楼栋</label>
+        <div class="layui-input-inline">
+            <select name="block" lay-verify="required" lay-search="">
+                <option value="">请选择楼栋数</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+            </select>
+        </div></div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block" style="width: 300px">
+                <select name="state" lay-verify="required" lay-search="">
+                    <option value="1">闲置</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车位编号</label>
+            <div class="layui-input-block" style="width: 300px">
+                <input type="text" name="no"   placeholder="请输入车位编号" class="layui-input" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="mod">修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="modDiv1" style="display: none;margin: 10px">
+    <form class="layui-form"  style="margin-top: 20px;margin-left:35%;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">楼栋</label>
+            <div class="layui-input-inline">
+                <select name="block" lay-verify="required" lay-search="">
+                    <option value="">请选择楼栋数</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                </select>
+            </div></div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车位状态</label>
+            <div class="layui-input-inline">
+                <select name="state" lay-verify="required" lay-search="">
+                    <option value="1">待售</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车位编号</label>
+            <div class="layui-input-block" style="width: 300px">
+                <input type="text" name="no"   placeholder="请输入车位编号" class="layui-input" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="mod1">新增</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/html" id="barDemo">
+    {{#  if(d.state==0){ }}
+    <p>请解除该车位的业主关系，再进行编辑或删除操作</p>
+    {{#  } }}
+    {{#  if(d.state==1){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    {{#  } }}
+    {{#  if(d.state==1){ }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    {{#  } }}
+</script>
+<script src="../../resources/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.use(['table','jquery','layer','form'], function(){
+        var table = layui.table
+        var layer = layui.layer
+        var $=layui.jquery
+        var form=layui.form
+        //提交修改信息
+        form.on("submit(mod)",function(data){
+            console.log(JSON.stringify(data))
+            $.ajaxSettings.async = false;
+            $.post("/parking/modParking",data.field,function(res){
+                if(res.code != 1){
+                    layer.msg(res.msg);
+                }else{
+                    layer.msg(res.msg);
+                    location.href="/page/parking/parkingInfo.html";
+                }
+            })})
+        $.ajaxSettings.async = true;
+        //渲染车位信息数据表格
+        var tabl=table.render({
+            elem: '#test'
+            ,url:'/parking/parkingInfo'
+            ,title: '车位信息管理'
+            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            ,cols: [
+                [
+                {field:'id', title:'ID',  fixed: 'left',align:'center'}
+                ,{field:'block', title:'栋数' ,fixed: 'left',align:'center'}
+                ,{field:'state', title:'状态' ,fixed: 'left',align:'center',templet:"#state"}
+                ,{field:'no', title:'车位编号' ,fixed: 'left',align:'center'}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:500,align:'center'}
+            ]
+                ],page:true
+        }
+        );
+        //侧边栏
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'edit'){
+                layer.open({
+                type:1,
+                content:$("#modDiv"),
+                area:['800px','600px'],
+                    cancel: function(){
+                        layer.close(1);
+                    },
+                    success:function(){
+                            $("[name='id']").val(data.id);
+                            $("[name='block']").find("option[value = '"+data.block+"']").attr("selected","selected")
+                            $("[name='state']").find("option[value = '"+data.state+"']").attr("selected","selected")
+                            $("[name='no']").val(data.no);
+                            form.render()
+                        }}
+            )
+            }
+            if(obj.event === 'del'){
+                    console.log(JSON.stringify(data))
+                deleteNotice(data)
+            }
+        });
+        function deleteNotice(data){
+            layer.confirm('你确定要删除吗?', {icon: 3, title:'提示'}, function(index){
+                $.post("/parking/delParking",{id:data.id},function(res){
+                    layer.msg(res.msg);
+                })
+                layer.close(index);
+                tabl.reload();
+                form.render()
+            });
+
+        }
+        //弹出新增框
+        table.on('toolbar(test)', function(obj){
+            switch(obj.event){
+                case 'getCheckData':
+                    layer.open({
+                        type:1,
+                        content:$("#modDiv1"),
+                        area:['800px','600px'],
+                        cancel: function(){
+                            layer.close(1);
+                        },
+                        success:function(){
+                            $("[name='item']").val("");
+                            form.render()
+                        }}
+                    )
+                    break;
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    break;
+            };
+        });
+        //提交新增车位信息
+        form.on("submit(mod1)",function(data){
+            $.post("/parking/addParking",data.field,function(res){
+                if(res.code != 1){
+                    layer.msg(res.msg);
+                }else{
+                    layer.msg(res.msg);
+                    location.href="/page/parking/parkingInfo.html";
+                }
+            })})
+        });
+</script>
+<script type="text/html" id="state">
+    {{# if (d.state==0) { }}
+    <span>已售或已租</span>
+    {{# } if(d.state==1) { }}  
+    <span>闲置</span>
+    {{# }}}  
+</script>
+</body>
+</html>

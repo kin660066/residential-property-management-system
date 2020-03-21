@@ -16,7 +16,7 @@ spring:
       enable: true
    #监控配置
       stat-view-servlet:
-        enabled: true
+        enabled: false
         login-username: root
         login-password: 123456
         allow: 

@@ -7,17 +7,20 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sontan.rpms.common.DataGridView;
 import com.sontan.rpms.common.ResultObj;
+import com.sontan.rpms.entity.Parking;
 import com.sontan.rpms.entity.User;
 import com.sontan.rpms.entity.UserFamily;
 import com.sontan.rpms.service.UserFamilyService;
 import com.sontan.rpms.service.UserService;
 import com.sontan.rpms.utils.CardUtil;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
@@ -105,14 +108,14 @@ public class OwnerListController {
     }
 
     /**
-     * 挑战业主家属页面
+     * 跳转业主家属页面
      * @param id
      * @param
      * @return
      */
     @RequestMapping("/toOwnerRe")
     public String toOwnerRe(Integer id, HttpSession session){
-        session.setAttribute("rid",id);
+        session.setAttribute("relateid",id);
         System.out.println(id);
         return "page/Owners/OwnerRe.html";
     }
@@ -127,11 +130,10 @@ public class OwnerListController {
     @ResponseBody
     @RequestMapping("/ownerReList")
     public DataGridView ownerReList(@RequestParam("page")int pageIndex,
-                                  @RequestParam("limit")int pageSize,HttpSession session){
-        int id =(int)session.getAttribute("rid");
+                                  @RequestParam("limit")int pageSize,HttpSession session ){
         IPage<UserFamily> page = new Page<>(pageIndex,pageSize);
         QueryWrapper<UserFamily> wrapper=new QueryWrapper<>();
-        wrapper.eq("userRelateId",id);
+        wrapper.eq("userRelateId",session.getAttribute("relateid"));
         userFamilyService.page(page,wrapper);
         List<UserFamily> list =page.getRecords();
         return  new DataGridView(page.getTotal(),list);
@@ -149,11 +151,11 @@ public class OwnerListController {
      */
     @ResponseBody
     @RequestMapping("/addOwnerRe")
-    public ResultObj addOwnerRe(UserFamily userFamily,HttpSession s) {
-        userFamily.setUserrelateid((int)s.getAttribute("rid"));
+    public ResultObj addOwnerRe(UserFamily userFamily,HttpSession session) {
+        userFamily.setUserrelateid((int)session.getAttribute("relateid"));
         QueryWrapper<UserFamily> wrapper = new QueryWrapper<>();
         wrapper.eq("name", userFamily.getName()).or().eq("relationship", userFamily.getRelationship());
-        wrapper.eq("userrelateid",(int)s.getAttribute("rid"));
+        wrapper.eq("id",session.getAttribute("relateid"));
         if (userFamilyService.getOne(wrapper) != null) {
             return ResultObj.RELATIONSHIP_ADD_REPEAT;
         } else {
@@ -162,6 +164,21 @@ public class OwnerListController {
         return ResultObj.LOGIN_ADD_SUCESS;
     }
 
+    /**
+     * 修改家属信息
+     * @param userFamily
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/modOwnerRe")
+    public ResultObj modOwnerRe(UserFamily userFamily) {
+        UpdateWrapper<UserFamily> wrapper = new UpdateWrapper<>();
+        wrapper.eq("id",userFamily.getId());
+        if(userFamilyService.update(userFamily,wrapper)==false){
+            return ResultObj.LOGIN_MOD_ERROR;
+        }
+        return ResultObj.LOGIN_MOD_SUCESS;
+    }
     /**
      * 根据业主id删除家属成员
      * @param id
@@ -178,5 +195,6 @@ public class OwnerListController {
         else
             return ResultObj.DELETE_ERROR;
     }
+
 }
 

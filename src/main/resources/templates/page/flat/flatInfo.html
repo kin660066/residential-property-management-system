@@ -14,7 +14,7 @@
     {{#  if(d.state==1){ }}
     <a class="layui-btn layui-btn-normal layui-btn-xs"  lay-event="bind">业主绑定</a>
     {{#  } }}
-      {{#  if(d.state==0){ }}
+    {{#  if(d.state==0){ }}
     <a class="layui-btn layui-btn-danger layui-btn-xs" name="unbind" lay-event="unbind">业主解绑</a>
     {{#  } }}
     <a class="layui-btn layui-btn-danger layui-btn-xs"  lay-event="del">删除</a>
@@ -27,14 +27,16 @@
         var $=layui.jquery
         var form=layui.form
         form.on("submit(mod)",function(data){
+            $.ajaxSettings.async = false;
             $.post("/Owner/modOwner",data.field,function(res){
-                if(rs.code != 1){
+                if(res.code != 1){
                     layer.msg(res.msg);
                 }else{
                     layer.msg(res.msg);
                     location.href="/page/Owners/OwnerInfo.html";
                 }
             })})
+        $.ajaxSettings.async = true;
         var tabl=table.render({
             elem: '#test'
             ,url:'/flat/flatInfoList'

@@ -6,9 +6,11 @@
     <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
 </head>
 <body>
-<div class="layui-btn-container" style="margin:50px 0 20px 20px ">
-    <a href="/fac/toAddFacility"><button type="button" class="layui-btn layui-btn-normal layui-btn-radius" >新增公共设备</button></a>
-</div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button type="button" class="layui-btn layui-btn-sm" lay-event="getCheckData"><i class="layui-icon"></i></button>
+    </div>
+</script>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <div id="modDiv" style="display: none;margin: 10px">
     <form class="layui-form"  style="margin-top: 20px;margin-left:35%;">
@@ -19,30 +21,29 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">公共设备</label>
+            <label class="layui-form-label">缴费项目项</label>
             <div class="layui-input-block" style="width: 300px">
-                <input type="text" name="facility"   placeholder="请输入公共设备" class="layui-input" autocomplete="off">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">区域</label>
-            <div class="layui-input-block" style="width: 300px">
-                <input type="text" name="area"  readonly placeholder="请输入区域" class="layui-input" autocomplete="off">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">状态</label>
-            <div class="layui-input-block" style="width: 300px">
-                <select name="state" id="" >
-                    <option value="0">正常</option>
-                    <option value="1">损坏</option>
-                    <option value="2">维修中</option>
-                </select>
+                <input type="text" name="item"   placeholder="请输入缴费项目项" class="layui-input" autocomplete="off">
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button type="submit" class="layui-btn" lay-submit lay-filter="mod">修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="modDiv1" style="display: none;margin: 10px">
+    <form class="layui-form"  style="margin-top: 20px;margin-left:35%;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">缴费项目项</label>
+            <div class="layui-input-block" style="width: 300px">
+                <input type="text" name="item"   placeholder="请输入缴费项目项" class="layui-input" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="mod1">新增</button>
             </div>
         </div>
     </form>
@@ -58,30 +59,32 @@
         var layer = layui.layer
         var $=layui.jquery
         var form=layui.form
+        //提交修改信息
         form.on("submit(mod)",function(data){
-            $.post("/fac/modFacility",data.field,function(res){
+            $.post("/paymentItem/modPaymentItem",data.field,function(res){
                 if(res.code != 1){
                     layer.msg(res.msg);
                 }else{
                     layer.msg(res.msg);
-                    location.href="/page/facility/facilityInfo.html";
+                    location.href="/page/payment/paymentInfo.html";
                 }
             })})
+        //渲染缴费项项目数据表格
         var tabl=table.render({
             elem: '#test'
-            ,url:'/fac/facilityInfo'
-            ,title: '公共设备信息'
+            ,url:'/paymentItem/paymentItemInfo'
+            ,title: '缴费项目项管理'
+            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,cols: [
                 [
                 {field:'id', title:'ID',  fixed: 'left',align:'center'}
-                ,{field:'facility', title:'公共设备' ,fixed: 'left',align:'center'}
-                ,{field:'area', title:'区域',  fixed: 'left',align:'center'}
-                ,{field:'state', title:'状态' ,fixed: 'left',align:'center' ,templet:"#state"}
+                ,{field:'item', title:'缴费项目项' ,fixed: 'left',align:'center'}
                 ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150,align:'center'}
             ]
                 ],page:true
         }
         );
+        //侧边栏
         table.on('tool(test)', function(obj){
             var data = obj.data;
             if(obj.event === 'edit'){
@@ -94,9 +97,7 @@
                     },
                     success:function(){
                             $("[name='id']").val(data.id);
-                            $("[name='facility']").val(data.facility);
-                            $("[name='area']").val(data.area);
-                            $("[name='state']").find("option[value = '"+data.state+"']").attr("selected","selected")
+                            $("[name='item']").val(data.item);
                             form.render()
                         }}
             )
@@ -108,7 +109,7 @@
         });
         function deleteNotice(data){
             layer.confirm('你确定要删除吗?', {icon: 3, title:'提示'}, function(index){
-                $.post("/fac/delFacility",{id:data.id},function(res){
+                $.post("/paymentItem/delPaymentItem",{id:data.id},function(res){
                     layer.msg(res.msg);
                 })
                 layer.close(index);
@@ -116,11 +117,41 @@
             });
 
         }
+        //弹出新增框
+        table.on('toolbar(test)', function(obj){
+            switch(obj.event){
+                case 'getCheckData':
+                    layer.open({
+                        type:1,
+                        content:$("#modDiv1"),
+                        area:['800px','600px'],
+                        cancel: function(){
+                            layer.close(1);
+                        },
+                        success:function(){
+                            $("[name='item']").val("");
+                            form.render()
+                        }}
+                    )
+                    break;
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    break;
+            };
         });
-
-
+        //提交新增缴费项
+        form.on("submit(mod1)",function(data){
+            $.post("/paymentItem/addPaymentItem",data.field,function(res){
+                if(res.code != 1){
+                    layer.msg(res.msg);
+                }else{
+                    layer.msg(res.msg);
+                    location.href="/page/payment/paymentInfo.html";
+                }
+            })})
+        });
 </script>
-
 <script type="text/html" id="state">
     {{# if (d.state==0) { }}
     <span>正常</span>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+</head>
+<body>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+<script src="../../resources/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.use(['table','jquery','layer','form'], function(){
+        var table = layui.table
+        //渲染车位信息数据表格
+        var tabl=table.render({
+            elem: '#test'
+            ,url:'/parking/parkingOwnerInfo'
+            ,title: '车位信息管理'
+            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            ,cols: [
+                [
+                {field:'id', title:'ID',  fixed: 'left',align:'center'}
+                ,{field:'block', title:'栋数' ,fixed: 'left',align:'center'}
+                ,{field:'starttime', title:'车位使用开始时间' ,fixed: 'left',align:'center'}
+                ,{field:'endtime', title:'车位使用结束时间' ,fixed: 'left',align:'center'}
+                ,{field:'carno', title:'车牌号码' ,fixed: 'left',align:'center'}
+                ,{field:'no', title:'车位编号' ,fixed: 'left',align:'center'}
+            ]
+                ]
+        }
+        );
+        });
+</script>
+
+</body>
+</html>

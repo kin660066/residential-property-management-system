@@ -2,11 +2,13 @@ package com.sontan.rpms.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sontan.rpms.common.DataGridView;
 import com.sontan.rpms.common.ResultObj;
 import com.sontan.rpms.dao.FlatMapper;
 import com.sontan.rpms.entity.Flat;
+import com.sontan.rpms.entity.Parking;
 import com.sontan.rpms.entity.User;
 import com.sontan.rpms.service.FlatLayoutService;
 import com.sontan.rpms.service.FlatService;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -108,12 +111,23 @@ public class FlatController {
         return ResultObj.UNBIND_ERROR;
     }
 
+    /**
+     * 舔砖绑定页面
+     * @param no
+     * @param request
+     * @return
+     */
     @RequestMapping("toBindFlat")
     public String toBindFlat(String no, HttpServletRequest request){
         System.out.println(no);
         request.setAttribute("no",no);
         return "/page/flat/bindFlat.html";
     }
+
+    /**
+     * 查询业主名字
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/searchOwner")
     public DataGridView searchOwner(){
@@ -123,6 +137,12 @@ public class FlatController {
         return  new DataGridView(list);
     }
 
+    /**
+     * 绑定业主房屋
+     * @param no
+     * @param owner
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/addBindFlat")
     public ResultObj addBindFlat(String no,String owner){
@@ -130,9 +150,17 @@ public class FlatController {
         wrapper.eq("username",owner);
         User user=userService.getOne(wrapper);
         UpdateWrapper<Flat> wrapper1 = new UpdateWrapper();
-        wrapper1.set("ownerid",user.getId()).set("state",0).eq("no",no);
+        wrapper1.set("ownerid",user.getId()).set("state",0).set("createtime",new Date()).eq("no",no);
         if(flatService.update(wrapper1)){
         return ResultObj.BIND_SUCCESS;}
         return ResultObj.BIND_ERROR;
+    }
+    @ResponseBody
+    @RequestMapping("/flatOwnerInfo")
+    public DataGridView flatOwnerInfo(){
+        Page<FlatVo> page = new Page<>();
+        flatService.getFlatVo1(page,1);
+        List<FlatVo> list =page.getRecords();
+        return  new DataGridView(page.getTotal(),list);
     }
 }
