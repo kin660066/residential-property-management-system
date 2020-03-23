@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+</head>
+<body>
+<div style="text-align: center">
+    <p style="font-size: 50px;letter-spacing: 20px;margin: 20px">业主公告</p>
+</div>
+<!-- 表格 -->
+<table class="layui-hide" id="test" lay-filter="test"></table>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+</script>
+<script src="../../resources/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.use(['table','jquery'], function() {
+        var table = layui.table
+        var $=layui.jquery
+        table.render({
+                elem: '#test'
+                ,url:'/announcement/announcementOwnerList'
+                ,title: '公告通知'
+                ,cols: [
+                    [
+                        {field:'title', title:'最新通知', width:'60%', fixed: 'left',align:'left'}
+                        ,{field:'priority', title:'类型' ,width:'15%',fixed: 'left',align:'center',templet:"#priority"}
+                        ,{field:'publishtime', title:'公布时间' ,width:'15%',fixed: 'left',align:'right'}
+                        ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:'10%',align:'center'}
+                    ]
+                ],page:true
+            })
+        table.on('tool(test)', function(obj){
+            if(obj.event === 'detail'){
+                location.href="/announcement/announcementDetail?id="+obj.data.id
+            }
+            if(obj.event === 'del'){
+                deleteNotice(obj.data);
+            }
+        });
+        function deleteNotice(data){
+            console.log(data.id)
+            layer.confirm('你确定要删除吗?', {icon: 3, title:'提示'}, function(index){
+                $.post("/announcement/announcementOwnerList",{id:data.id},function(res){
+                    layer.msg(res.msg);
+                })
+                layer.close(index);
+                tab.render()
+            });
+
+        }
+    })
+</script>
+<script type="text/html" id="priority">
+    {{# if (d.priority==1) { }}
+     		  <span style="color:red">重要</span>
+    {{# } else if(d.priority==0) { }}  
+    <span>正常</span>
+    {{# }}}  
+</script>
+</body>
+</html>

@@ -85,19 +85,18 @@
     },{
       "title": "公告管理",
       "icon": "icon-text",
-      "href": "page/news/newsList.html",
       "spread": false,
       "children": [
         {
-          "title": "公告发布",
+          "title": "管理公告",
           "icon": "&#xe61c;",
-          "href": "page/404.html",
+          "href": "page/announcement/announcement.html",
           "spread": false
         },
         {
           "title": "历史公共",
           "icon": "&#xe609;",
-          "href": "page/login/login.html",
+          "href": "page/announcement/announcementHistory.html",
           "spread": false
         }
       ]
@@ -168,7 +167,7 @@
     },{
       "title": "查看公告",
       "icon": "&#xe62a;",
-      "href": "page/news/newsList.html",
+      "href": "page/announcement/announcementOwner.html",
       "spread": false
     },{
       "title": "报修申请 ",

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+
+</head>
+<body>
+<div style="text-align: center">
+    <p style="font-size: 50px;letter-spacing: 20px;margin: 20px">公告详情</p>
+</div>
+<hr class="layui-bg-orange">
+<!-- 表格 -->
+<div style="margin: 30px">
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">公告标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" readonly class="layui-input" th:value="${title}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">公布时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="publishtime" readonly class="layui-input" th:value="${time}">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">通知详情</label>
+        <div class="layui-input-block">
+            <textarea id="lay_edit" name="content" readonly class="layui-textarea" th:text="${content}"></textarea>
+        </div>
+    </div>
+    <button type="button" style="margin-left: 30% " class="layui-btn layui-btn-normal"><a href="javascript:history.go(-1)">返回</a></button>
+</form>
+
+</div>
+<script src="../../resources/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.use(['layedit', 'form','jquery'], function() {
+        var form = layui.form;
+        var layedit = layui.layedit;
+        var $=layui.jquery
+        //创建一个编辑器
+        var index = layedit.build('lay_edit', {
+            height: 350
+        });
+        //提交时把值同步到文本域中
+        form.verify({
+            //content富文本域中的lay-verify值
+            content: function (value) {
+                return layedit.sync(index);
+            }
+        });
+        $(".layui-layedit").css('pointer-events','none');
+    })
+</script>
+</body>
+</html>
