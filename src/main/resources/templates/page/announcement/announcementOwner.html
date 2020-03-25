@@ -33,9 +33,9 @@
                 ],page:true
             })
         table.on('tool(test)', function(obj){
-            if(obj.event === 'detail'){
-                location.href="/announcement/announcementDetail?id="+obj.data.id
-            }
+                if(obj.event === 'detail'){
+                    location.href="/announcement/announcementDetail?id="+obj.data.id
+                }
             if(obj.event === 'del'){
                 deleteNotice(obj.data);
             }

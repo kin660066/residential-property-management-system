@@ -168,4 +168,15 @@ public class MessageController extends ApiController {
          return ResultObj.CONFIRM_SUCCESS;}
         return ResultObj.CONFIRM_ERROR;
     }
+    @ResponseBody
+    @RequestMapping("/drawback")
+    public ResultObj drawback(Message message){
+        UpdateWrapper<Message> wrapper1=new UpdateWrapper<>();
+        wrapper1.eq("id",message.getId());
+        wrapper1.set("flag",2);
+        wrapper1.set("remark",message.getRemark());
+        if(messageService.update(wrapper1)){
+            return ResultObj.CONFIRM_SUCCESS;}
+        return ResultObj.CONFIRM_ERROR;
+    }
 }

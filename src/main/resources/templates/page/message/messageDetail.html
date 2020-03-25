@@ -7,6 +7,27 @@
 
 </head>
 <body>
+<div id="modDiv" style="display: none;">
+    <form class="layui-form">
+        <div class="layui-form-item" style="display: none">
+            <label class="layui-form-label">ID</label>
+            <div class="layui-input-block" style="width: 300px">
+                <input type="text" name="id" readonly placeholder="" class="layui-input" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block" style="width: 300px">
+               <textarea name="remark" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="mod">退回</button>
+            </div>
+        </div>
+    </form>
+</div>
 <div style="text-align: center">
     <p style="font-size: 50px;letter-spacing: 20px;margin: 20px">公告详情</p>
 </div>
@@ -51,7 +72,7 @@
             <button type="submit" class="layui-btn" lay-submit lay-filter="add" th:if="${flag}==0">确认处理</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             <button type="button" class="layui-btn layui-btn-normal"><a href="javascript:history.go(-1)">返回</a></button>
-            <button type="button" class="layui-btn" lay-submit lay-filter="add" th:if="${flag}==0">退回申请</button>
+            <button type="button" class="layui-btn" id="a" th:if="${flag}==0">退回申请</button>
         </div>
     </div>
 </form>
@@ -59,8 +80,9 @@
 </div>
 <script src="../../resources/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript">
-    layui.use(['layedit', 'form','jquery'], function() {
+    layui.use(['layedit', 'form','jquery','layer'], function() {
         var form = layui.form;
+        var layer=layui.layer
         var $=layui.jquery
         var id=$("#id").val()
         form.on("submit(add)", function (data) {
@@ -84,7 +106,30 @@
                 }
             });
         })
-    })
+       $("#a").click(function(){
+           layer.open({
+               type:1,
+               content:$("#modDiv"),
+               area:['500px','300px'],
+               cancel: function(){
+                   layer.close(1);
+               },
+               success:function(){
+                   $("[name='id']").val(id);
+                   form.render()
+               }})
+       })
+        form.on("submit(mod)",function(data){
+            $.post("/message/drawback",data.field,function(res){
+                if(res.code != 1){
+                    layer.msg(res.msg);
+                }else{
+                    layer.msg(res.msg);
+                    location.href="/page/message/messageList.html";
+                }
+            })})
+    });
+
 </script>
 </body>
 </html>
