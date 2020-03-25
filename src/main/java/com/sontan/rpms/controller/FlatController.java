@@ -155,6 +155,11 @@ public class FlatController {
         return ResultObj.BIND_SUCCESS;}
         return ResultObj.BIND_ERROR;
     }
+
+    /**
+     * 业主查看房屋信息
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/flatOwnerInfo")
     public DataGridView flatOwnerInfo(){

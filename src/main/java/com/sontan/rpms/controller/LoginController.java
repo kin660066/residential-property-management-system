@@ -7,11 +7,13 @@ import com.sontan.rpms.common.ResultObj;
 import com.sontan.rpms.entity.User;
 import com.sontan.rpms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -38,7 +40,7 @@ public class LoginController {
 
     @RequestMapping("/login")
     @ResponseBody
-    public ResultObj login(String account,String password,String code,HttpSession session){
+    public ResultObj login(String account, String password, String code, HttpSession session, HttpServletRequest request){
         System.out.println(code);
         Object codeSession = session.getAttribute("code");
         if(code!=null&&code.equals(codeSession)) {
@@ -48,6 +50,7 @@ public class LoginController {
             User user = userService.getOne(queryWrapper);
             if(null!=user) {
                 session.setAttribute("user", user);
+               request.getSession().setAttribute("aaa",user);
                 return ResultObj.LOGIN_SUCCESS;
             }else {
                 return ResultObj.LOGIN_ERROR_ACCOUNTORPWD;

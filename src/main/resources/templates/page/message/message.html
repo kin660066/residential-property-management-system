@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+</head>
+<body>
+<div style="width:100%;overflow:hidden">
+    <div class="layui-btn-container" style="margin:50px 0 20px 100px ;float: left;width: 20%">
+        <a href="/message/toAddMessage1"><button type="button" class="layui-btn" >申报申请家属绑定消息</button></a>
+    </div>
+    <div class="layui-btn-container" style="margin:50px 0 20px 20px;float: left;width: 20% ">
+        <a href="/message/toAddMessage2"><button type="button" class="layui-btn" >申报车位申请消息</button></a>
+    </div>
+    <div class="layui-btn-container" style="margin:50px 0 20px 20px ;float: left;width: 20%">
+        <a href="/message/toAddMessage3"><button type="button" class="layui-btn" >申报公共设备报修消息</button></a>
+    </div>
+    <div class="layui-btn-container" style="margin:50px 0 20px 100px ;float: left;width: 20%">
+        <a href="/message/toAddMessage4"><button type="button" class="layui-btn" >投诉</button></a>
+    </div>
+</div>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script src="../../resources/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.use(['table','jquery','layer','form'], function(){
+        var table = layui.table
+        //渲染车位信息数据表格
+        var tabl=table.render({
+                elem: '#test'
+                ,url:'/message/messageInfo'
+                ,title: '消息管理'
+                ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                ,cols: [
+                    [
+                        {field:'title', title:'标题' ,fixed: 'left',align:'center'}
+                        ,{field:'content', title:'内容',  fixed: 'left',align:'center'}
+                        ,{field:'type', title:'申请类型',  fixed: 'left',align:'center',templet:"#type"}
+                        ,{field:'flag', title:'状态',  fixed: 'left',align:'center',templet:"#flag"}
+                    ]
+                ]
+            }
+        );
+    });
+</script>
+<script type="text/html" id="type">
+    {{# if (d.type==0) { }}
+    <span>投诉</span>
+    {{# } if(d.type==1) { }}  
+    <span>家属申请</span>
+    {{# } if(d.type==2) { }}  
+    <span>车位申请</span>
+    {{# } if(d.type==3) { }}  
+    <span>报修</span>
+    {{# }}}  
+</script>
+<script type="text/html" id="flag">
+    {{# if (d.flag==0) { }}
+    <span>未处理</span>
+    {{# } else if(d.flag==1) { }}  
+    <span>已处理</span>
+    {{# }}}  
+</script>
+</body>
+</html>

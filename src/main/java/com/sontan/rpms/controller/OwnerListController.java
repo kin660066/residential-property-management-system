@@ -4,6 +4,7 @@ package com.sontan.rpms.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sontan.rpms.common.DataGridView;
 import com.sontan.rpms.common.ResultObj;
@@ -196,5 +197,14 @@ public class OwnerListController {
             return ResultObj.DELETE_ERROR;
     }
 
+    @ResponseBody
+    @RequestMapping("/updataUser")
+    public ResultObj updataUser(User user){
+        UpdateWrapper<User> wrapper = new UpdateWrapper<>();
+        wrapper.set("password",user.getPassword()).eq("id",user.getId());
+        if(userService.update(wrapper)){
+        return ResultObj.LOGIN_MOD_SUCESS;}
+        return ResultObj.LOGIN_MOD_ERROR;
+    }
 }
 

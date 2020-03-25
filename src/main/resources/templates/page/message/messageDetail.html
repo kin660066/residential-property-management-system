@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+
+</head>
+<body>
+<div style="text-align: center">
+    <p style="font-size: 50px;letter-spacing: 20px;margin: 20px">公告详情</p>
+</div>
+<hr class="layui-bg-orange">
+<!-- 表格 -->
+<div style="margin: 30px">
+<form class="layui-form" action="">
+    <input id="id" name="id" type="hidden" th:value="${id}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">公告标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" readonly class="layui-input" th:value="${title}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">公布时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="creattetime" readonly class="layui-input" th:value="${creattetime}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">消息类型</label>
+        <div class="layui-input-block">
+            <input type="text" name="type" readonly class="layui-input" th:value="${type}==0?'投诉':(${type}==1?'家属申请':(${type}==2?'车位申请':'设备报修'))">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <input type="text" name="type" readonly class="layui-input" th:value="${flag}==0?'未处理':(${flag}==1?'已处理':'已取消')">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">内容详情</label>
+        <div class="layui-input-block">
+            <textarea id="lay_edit" name="content" readonly class="layui-textarea" th:text="${content}"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+
+            <button type="submit" class="layui-btn" lay-submit lay-filter="add" th:if="${flag}==0">确认处理</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button type="button" class="layui-btn layui-btn-normal"><a href="javascript:history.go(-1)">返回</a></button>
+            <button type="button" class="layui-btn" lay-submit lay-filter="add" th:if="${flag}==0">退回申请</button>
+        </div>
+    </div>
+</form>
+
+</div>
+<script src="../../resources/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.use(['layedit', 'form','jquery'], function() {
+        var form = layui.form;
+        var $=layui.jquery
+        var id=$("#id").val()
+        form.on("submit(add)", function (data) {
+            var btn =  $(this);
+            console.log(data.field)
+            console.log(JSON.stringify(data.field))
+            $(this).text("添加中...").attr("disabled", "disabled").addClass("layui-disabled");
+            //设置登录按钮  为不可点击
+            btn.text("添加中...").attr("disabled","disabled").addClass("layui-disabled");
+            $.post("/message/confirm",{id:id},function(rs){
+                //设置登录按钮 恢复可点击   在前端防止 重复点击
+                console.log("添加中...")
+                btn.text("添加").attr("disabled",false).removeClass("layui-disabled");
+                layer.msg(rs.msg);
+                if(rs.code != 1){
+                    layer.msg(rs.msg);
+                }else{
+                    //跳转到templates/list.html页面
+                    layer.msg(rs.msg);
+                    location.href="/page/message/messageList.html";
+                }
+            });
+        })
+    })
+</script>
+</body>
+</html>

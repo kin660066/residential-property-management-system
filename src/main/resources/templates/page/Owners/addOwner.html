@@ -10,6 +10,8 @@
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
+<div th:text="${session.aaa.username}"></div>
+<div th:text="${session.user.username}"></div>
 <form class="layui-form"  style="margin-top: 20px;margin-left:35%;">
     <div class="layui-form-item">
         <label class="layui-form-label">账号</label>

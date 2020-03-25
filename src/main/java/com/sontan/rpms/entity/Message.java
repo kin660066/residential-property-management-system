@@ -37,6 +37,7 @@ public class Message extends Model<Message> {
     private Date createtime;
     //0-未处理 1-已处理
     private Integer flag;
+    private String remark;
 
 
 

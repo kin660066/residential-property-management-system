@@ -132,4 +132,5 @@ function showImg() {
             anim: 5
         });
     });
+
 }

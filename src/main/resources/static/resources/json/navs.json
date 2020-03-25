@@ -122,13 +122,13 @@
         {
           "title": "申请消息",
           "icon": "&#xe61c;",
-          "href": "page/404.html",
+          "href": "page/message/message.html",
           "spread": false
         },
         {
           "title": "投诉信息",
           "icon": "&#xe609;",
-          "href": "page/login/login.html",
+          "href": "page/message/messageList.html",
           "spread": false
         }
       ]
@@ -204,7 +204,7 @@
     },{
       "title": "消息",
       "icon": "icon-text",
-      "href": "page/news/newsList.html",
+      "href": "/page/message/message.html",
       "spread": false
     }
   ]

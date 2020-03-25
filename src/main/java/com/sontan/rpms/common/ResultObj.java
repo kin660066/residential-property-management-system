@@ -24,6 +24,8 @@ public class ResultObj {
     public static final ResultObj BIND_SUCCESS =new ResultObj("绑定成功",Constant.OK);
     public static final ResultObj UNBIND_ERROR =new ResultObj("解绑失败",Constant.ERROR);
     public static final ResultObj BIND_ERROR =new ResultObj("绑定失败",Constant.ERROR);
+    public static final ResultObj CONFIRM_SUCCESS =new ResultObj("处理成功",Constant.OK);
+    public static final ResultObj CONFIRM_ERROR =new ResultObj("处理失败",Constant.ERROR);
 
     private String msg;
     private Integer code;

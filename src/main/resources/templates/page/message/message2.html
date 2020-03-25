@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN"  >
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+
+</head>
+<body>
+<form class="layui-form"  style="margin-top: 20px;margin-left:35%;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">车牌号码</label>
+        <div class="layui-input-block" style="width: 300px">
+            <input type="text" name="carno"  placeholder="请输入车牌号码" class="layui-input" autocomplete="off">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">申请车位</label>
+        <div class="layui-input-block" style="width: 300px">
+            <select name="content" id="classifyId" lay-verify="required">
+                <option value="">请选择</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit lay-filter="add">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button type="button" class="layui-btn layui-btn-normal"><a href="javascript:history.go(-1)">返回</a></button>
+        </div>
+    </div>
+</form>
+<script src="/resources/layui/layui.js" charset="utf-8"></script>
+<script>
+
+    layui.use(['form', 'layedit', 'laydate','jquery'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,$=layui.jquery
+        getClassify();
+        //监听提交
+        form.on("submit(add)", function (data) {
+            var btn =  $(this);
+            console.log(data.field)
+            console.log(JSON.stringify(data.field))
+            $(this).text("添加中...").attr("disabled", "disabled").addClass("layui-disabled");
+            //设置登录按钮  为不可点击
+            btn.text("添加中...").attr("disabled","disabled").addClass("layui-disabled");
+            $.post("/message/addMessage2",data.field,function(rs){
+                //设置登录按钮 恢复可点击   在前端防止 重复点击
+                console.log("添加中...")
+                btn.text("添加").attr("disabled",false).removeClass("layui-disabled");
+                layer.msg(rs.msg);
+                if(rs.code != 1){
+                    layer.msg(rs.msg);
+                }else{
+                    //跳转到templates/list.html页面
+                    layer.msg(rs.msg);
+                    location.href="/page/message/message.html";
+                }
+            });
+        })
+
+        function getClassify() {
+            $.ajax({
+                url: '/message/searchCarNo',
+                success: function (res) {
+                    console.log(res)
+                    console.log(Object.keys(res.data).length)
+                    var length=Object.keys(res.data).length
+                    console.log(length)
+                    for(var i =0;i<length;i++){
+                        $("#classifyId").append("<option value=\""+res.data[i].no+"\">"+res.data[i].no+"</option>");
+                    }
+                    //重新渲染
+                    layui.form.render("select");
+                }
+            });
+        }
+
+    });
+</script>
+
+</body>
+</html>
