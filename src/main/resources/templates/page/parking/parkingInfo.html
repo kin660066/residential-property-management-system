@@ -15,9 +15,9 @@
 <div id="modDiv" style="display: none;margin: 10px">
     <form class="layui-form"  style="margin-top: 20px;margin-left:35%;">
         <div class="layui-form-item">
-            <label class="layui-form-label">ID</label>
-            <div class="layui-input-block" style="width: 300px">
-                <input type="text" name="id" readonly placeholder="" class="layui-input" autocomplete="off">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block" >
+                <input type="hidden" name="id" readonly placeholder="" class="layui-input" autocomplete="off">
             </div>
         </div>
         <div class="layui-form-item">
@@ -157,7 +157,7 @@
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,cols: [
                 [
-                {field:'id', title:'ID',  fixed: 'left',align:'center'}
+                {field:'id', title:'ID',  fixed: 'left',align:'center',hide:true}
                 ,{field:'block', title:'栋数' ,fixed: 'left',align:'center'}
                 ,{field:'state', title:'状态' ,fixed: 'left',align:'center',templet:"#state"}
                 ,{field:'no', title:'车位编号' ,fixed: 'left',align:'center'}

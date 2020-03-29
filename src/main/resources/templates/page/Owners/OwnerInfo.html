@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="layui-btn-container" style="margin:50px 0 20px 20px ">
-    <a href="/Owner/toAddOwner"><button type="button" class="layui-btn layui-btn-normal layui-btn-radius" >新增业主</button></a>
+    <a href="/Owner/toAddOwner"><button type="button" class="layui-btn" >新增业主</button></a>
 </div>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <div id="modDiv" style="display: none;margin: 10px">
@@ -105,7 +105,7 @@
             ,url:'/Owner/OwnerList'
             ,title: '业主信息'
             ,cols: [[
-                {field:'id', title:'ID',  fixed: 'left',align:'center'}
+                {field:'id', title:'ID',  fixed: 'left',align:'center',hide:true}
                 ,{field:'account', title:'用户名' ,fixed: 'left',align:'center'}
                 ,{field:'password', title:'密码',  fixed: 'left',align:'center'}
                 ,{field:'username', title:'姓名' ,fixed: 'left',align:'center'}

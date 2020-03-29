@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="layui-btn-container" style="margin:50px 0 20px 20px ">
-    <a href="/flat/toAddFlatInfo"><button type="button" class="layui-btn layui-btn-normal layui-btn-radius" >新增房屋信息</button></a>
+    <a href="/flat/toAddFlatInfo"><button type="button" class="layui-btn" >新增房屋</button></a>
 </div>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <script type="text/html" id="barDemo">
@@ -43,7 +43,7 @@
             ,title: '房屋信息'
             ,cols: [
                 [
-                {field:'id', title:'ID',  fixed: 'left' ,align:'center'}
+                {field:'id', title:'ID',  fixed: 'left' ,align:'center',hide:true}
                 ,{field:'block', title:'楼栋' ,fixed: 'left',align:'center'}
                 ,{field:'unit', title:'单元',  fixed: 'left',align:'center'}
                 ,{field:'floor', title:'楼层'  ,fixed: 'left',align:'center'}

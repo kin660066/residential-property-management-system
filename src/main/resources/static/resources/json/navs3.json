@@ -1,0 +1,118 @@
+{
+  "contentManagement": [
+    {
+      "title": "业主管理",
+      "icon": "&#xe612;",
+      "spread": false,
+      "children": [
+        {
+          "title": "业主信息",
+          "icon": "&#xe612;",
+          "href": "page/Owners/OwnerInfo.html",
+          "spread": false
+        },
+        {
+          "title": "业主成员",
+          "icon": "&#xe613;",
+          "href": "page/Owners/OwnerInfo2.html",
+          "spread": false
+        }
+      ]
+    },
+    {
+      "title": "房屋信息管理 ",
+      "icon": "icon-text",
+      "spread": false,
+      "children": [
+        {
+          "title": "房屋管理",
+          "icon": "&#xe656;",
+          "href": "page/flat/flatInfo.html",
+          "spread": false
+        }
+      ]
+    },
+    {
+      "title": "缴费管理",
+      "icon": "&#xe65e;",
+      "href": "page/news/newsList.html",
+      "spread": false,
+      "children": [
+        {
+          "title": "缴费项目项",
+          "icon": "&#xe61c;",
+          "href": "page/payment/paymentInfo.html",
+          "spread": false
+        },
+        {
+          "title": "缴费明细",
+          "icon": "&#xe609;",
+          "href": "page/payment/paymentDeatilInfo.html",
+          "spread": false
+        }
+      ]
+    },{
+      "title": "车位管理",
+      "icon": "icon-text",
+      "href": "",
+      "spread": false,
+      "children": [
+        {
+          "title": "车位信息",
+          "icon": "&#xe61c;",
+          "href": "page/parking/parkingInfo.html",
+          "spread": false
+        },
+        {
+          "title": "车位绑定",
+          "icon": "&#xe609;",
+          "href": "page/parking/parkingBind.html",
+          "spread": false
+        }
+      ]
+    },{
+      "title": "公共设备管理",
+      "icon": "icon-text",
+      "spread": false,
+      "children": [
+        {
+          "title": "公共设备信息",
+          "icon": "&#xe61c;",
+          "href": "page/facility/facilityInfo.html",
+          "spread": false
+        }
+      ]
+    },{
+      "title": "公告管理",
+      "icon": "icon-text",
+      "spread": false,
+      "children": [
+        {
+          "title": "管理公告",
+          "icon": "&#xe61c;",
+          "href": "page/announcement/announcement.html",
+          "spread": false
+        },
+        {
+          "title": "历史公共",
+          "icon": "&#xe609;",
+          "href": "page/announcement/announcementHistory.html",
+          "spread": false
+        }
+      ]
+    },{
+      "title": "信息管理",
+      "icon": "icon-text",
+      "href": "/page/message/messageList.html",
+      "spread": false
+    },{
+      "title": "管理员设置",
+      "icon": "icon-text",
+      "href": "/page/admin/adminInfo.html",
+      "spread": false
+    }
+  ]
+
+}
+
+

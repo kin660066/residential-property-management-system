@@ -3,11 +3,13 @@ package com.sontan.rpms.controller;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.sontan.rpms.common.ResultObj;
 import com.sontan.rpms.entity.User;
 import com.sontan.rpms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -75,5 +77,42 @@ public class LoginController {
     public Integer chara(HttpSession session){
         User user=(User)session.getAttribute("user");
         return user.getType();
+    }
+    @RequestMapping("logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "page/login/login.html";
+    }
+    @RequestMapping("user")
+    public String user(HttpSession session, ModelMap model){
+        User user = (User)session.getAttribute("user");
+        model.addAttribute("id",user.getId());
+        model.addAttribute("account",user.getAccount());
+        model.addAttribute("username",user.getUsername());
+        model.addAttribute("sex",user.getSex());
+        model.addAttribute("phone",user.getPhone());
+        model.addAttribute("address",user.getAddress());
+        model.addAttribute("age",user.getAge());
+        model.addAttribute("type",user.getType());
+        model.addAttribute("card",user.getCard());
+        return "page/user/userInfo.html";
+    }
+    @RequestMapping("toModPwd")
+    public String toModPwd( HttpSession session, ModelMap model){
+        User user = (User)session.getAttribute("user");
+        model.addAttribute("id",user.getId());
+        model.addAttribute("pwd",user.getPassword());
+        return "/page/user/changePwd.html";
+    }
+
+    @ResponseBody
+    @RequestMapping("/modPwd")
+    public ResultObj modPwd(String pwd1,Integer id){
+        UpdateWrapper<User> wrapper = new UpdateWrapper<>();
+        wrapper.set("password",pwd1).eq("id",id);
+        if(userService.update(wrapper)){
+            return ResultObj.LOGIN_MOD_SUCESS;
+        }
+        return ResultObj.LOGIN_MOD_ERROR;
     }
 }

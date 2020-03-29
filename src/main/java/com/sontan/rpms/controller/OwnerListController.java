@@ -66,8 +66,11 @@ public class OwnerListController {
      */
   @ResponseBody
   @RequestMapping("/addOwner")
-    public ResultObj addOwner(User user) {
-      user.setAge(CardUtil.getAge(user.getCard()));
+    public ResultObj addOwner(User user,HttpSession session) {
+      User admin = (User)session.getAttribute("user");
+      user.setCreateby(admin.getUsername());
+      if (user.getCard()!=null){
+      user.setAge(CardUtil.getAge(user.getCard()));}
       user.setCreatetime(new Date());
       QueryWrapper<User> wrapper = new QueryWrapper<>();
       wrapper.eq("account", user.getAccount()).or().eq("username", user.getUsername());
@@ -206,5 +209,22 @@ public class OwnerListController {
         return ResultObj.LOGIN_MOD_SUCESS;}
         return ResultObj.LOGIN_MOD_ERROR;
     }
+    @ResponseBody
+    @RequestMapping("/adminList")
+    public DataGridView adminList(@RequestParam("page")int pageIndex,
+                                  @RequestParam("limit")int pageSize){
+        IPage<User> page = new Page<>(pageIndex,pageSize);
+        QueryWrapper<User> wrapper=new QueryWrapper<>();
+        wrapper.eq("type",1).or().eq("type",2);
+        userService.page(page,wrapper);
+        List<User> list =page.getRecords();
+        return  new DataGridView(page.getTotal(),list);
+    }
+    @RequestMapping("/toAddAdmin")
+    public String toAddAdmin(){
+        return "page/admin/addAdmin.html";
+    }
+
+
 }
 

@@ -15,11 +15,11 @@
         var tabl=table.render({
             elem: '#test'
             ,url:'/flat/flatOwnerInfo'
-            ,title: '车位信息管理'
+            ,title: '房屋信息管理'
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,cols: [
                 [
-                    {field:'id', title:'ID',  fixed: 'left' ,align:'center'}
+                    {field:'id', title:'ID',  fixed: 'left' ,align:'center',hide:true}
                     ,{field:'block', title:'楼栋' ,fixed: 'left',align:'center'}
                     ,{field:'unit', title:'单元',  fixed: 'left',align:'center'}
                     ,{field:'floor', title:'楼层'  ,fixed: 'left',align:'center'}

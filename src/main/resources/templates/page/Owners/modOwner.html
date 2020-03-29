@@ -14,9 +14,9 @@
 <div id="modDiv" style="display: none;margin: 10px">
     <form class="layui-form"  style="margin-top: 20px">
         <div class="layui-form-item">
-            <label class="layui-form-label">业主ID</label>
-            <div class="layui-input-block" style="width: 300px">
-                <input type="text" name="userrelateid" readonly class="layui-input" autocomplete="off">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block">
+                <input type="hidden" name="userrelateid" readonly class="layui-input" autocomplete="off">
             </div>
         </div>
         <div class="layui-form-item">
@@ -89,8 +89,8 @@
                 ,title: '业主信息'
                 ,cols: [
                     [
-                        {field:'userrelateid', title:'业主ID',width:100,  fixed: 'left',align:'center'}
-                        ,{field:'id', title:'家属ID' ,fixed: 'left',align:'center'}
+                        {field:'userrelateid', title:'业主ID',width:100,  fixed: 'left',align:'center',hide:true}
+                        ,{field:'id', title:'家属ID' ,fixed: 'left',align:'center',hide:true}
                         ,{field:'relationship', title:'关系',  fixed: 'left',align:'center'}
                         ,{field:'phone', title:'电话' ,fixed: 'left',align:'center'}
                         ,{field:'name', title:'名字' , fixed: 'left',align:'center'}

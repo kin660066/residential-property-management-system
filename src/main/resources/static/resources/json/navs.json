@@ -47,7 +47,7 @@
         {
           "title": "缴费明细",
           "icon": "&#xe609;",
-          "href": "page/login/login.html",
+          "href": "page/payment/paymentDeatilInfo.html",
           "spread": false
         }
       ]

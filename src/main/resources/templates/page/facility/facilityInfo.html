@@ -11,11 +11,11 @@
 </div>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <div id="modDiv" style="display: none;margin: 10px">
-    <form class="layui-form"  style="margin-top: 20px;margin-left:35%;">
+    <form class="layui-form"  style="margin-top: 20px;margin-left:20%;">
         <div class="layui-form-item">
-            <label class="layui-form-label">ID</label>
-            <div class="layui-input-block" style="width: 300px">
-                <input type="text" name="id" readonly placeholder="" class="layui-input" autocomplete="off">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block" >
+                <input type="hidden" name="id" readonly placeholder="" class="layui-input" autocomplete="off">
             </div>
         </div>
         <div class="layui-form-item">
@@ -73,7 +73,7 @@
             ,title: '公共设备信息'
             ,cols: [
                 [
-                {field:'id', title:'ID',  fixed: 'left',align:'center'}
+                {field:'id', title:'ID',  fixed: 'left',align:'center',hide:true}
                 ,{field:'facility', title:'公共设备' ,fixed: 'left',align:'center'}
                 ,{field:'area', title:'区域',  fixed: 'left',align:'center'}
                 ,{field:'state', title:'状态' ,fixed: 'left',align:'center' ,templet:"#state"}
@@ -88,7 +88,7 @@
                 layer.open({
                 type:1,
                 content:$("#modDiv"),
-                area:['800px','600px'],
+                area:['600px','400px'],
                     cancel: function(){
                         layer.close(1);
                     },
