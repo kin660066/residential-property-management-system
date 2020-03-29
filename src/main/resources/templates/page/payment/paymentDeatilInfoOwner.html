@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+</head>
+<body>
+<div id="modDiv" style="display: none;margin: 10px">
+    <form class="layui-form" >
+        <div style="overflow: hidden">
+        <div style='padding:30px;overflow:hidden;background:#d2d0d0;float:left'><img src='/resources/images/11.jpg'></div>
+        <div style='padding:30px;overflow:hidden;background:#d2d0d0;float: left'><img src='/resources/images/12.jpg'></div>
+        </div>
+        <div class="layui-input-block" style="height: 0px" >
+            <input type="hidden" name="id"  placeholder="" class="layui-input" autocomplete="off">
+        </div>
+            <div class="layui-input-block" style="margin-left: 40%">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="mod">确认支付</button>
+            </div>
+    </form>
+</div>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+<script type="text/html" id="barDemo">
+    {{#  if(d.state==0){ }}
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="pay">支付</a>
+    {{#  } }}
+</script>
+<script src="../../resources/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.use(['table','jquery','layer','form'], function(){
+        var table = layui.table;
+        var form = layui.form;
+        var $=layui.jquery;
+        //渲染缴费项项目数据表格
+        table.render({
+            elem: '#test'
+            ,url:'/paymentDetail/paymentDetailListOwner'
+            ,title: '缴费'
+            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            ,cols: [
+                [
+                {field:'id', title:'ID',  fixed: 'left',align:'center'}
+                ,{field:'username', title:'业主',  fixed: 'left',align:'center'}
+                ,{field:'months', title:'月份' ,fixed: 'left',align:'center'}
+                ,{field:'item', title:'缴费项目项' ,fixed: 'left',align:'center'}
+                ,{field:'money', title:'缴费金额(元)' ,fixed: 'left',align:'center'}
+                ,{field:'createby', title:'创建人' ,fixed: 'left',align:'center'}
+                ,{field:'createtime', title:'创建时间' ,fixed: 'left',align:'center'}
+                ,{field:'paytime', title:'支付时间' ,fixed: 'left',align:'center'}
+                ,{field:'state', title:'状态' ,fixed: 'left',align:'center',templet:"#state"}
+                ,{title:'操作', toolbar: '#barDemo',width:300,align:'center'}
+            ]
+                ],page:true
+        }
+        );
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'pay'){
+                layer.open({
+                    type:1,
+                    content:$("#modDiv"),
+                    area:['540px','500px'],
+                    cancel: function(){
+                        layer.close(1);
+                    },
+                    success:function(){
+                        $("[name='id']").val(data.id);
+                        form.render()
+                    }}
+                )
+            }
+
+        });
+        form.on("submit(mod)",function(data){
+            console.log(JSON.stringify(data))
+            $.ajaxSettings.async = false;
+            $.post("/paymentDetail/paymentDetailPay",{id:data.field.id},function(res){
+                if(res.code != 1){
+                    layer.msg(res.msg);
+                }else{
+                    layer.msg(res.msg);
+                    location.href="/page/payment/paymentDeatilInfoOwner.html";
+                }
+            })})
+        $.ajaxSettings.async = true;
+        });
+</script>
+<script type="text/html" id="state">
+    {{# if (d.state==0) { }}
+    <span>未缴费</span>
+    {{# } if(d.state==1) { }}  
+    <span>已缴费</span>
+    {{# }}}  
+</script>
+</body>
+</html>

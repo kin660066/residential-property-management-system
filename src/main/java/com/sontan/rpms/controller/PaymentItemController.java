@@ -98,4 +98,11 @@ public class PaymentItemController extends ApiController {
         else
             return ResultObj.DELETE_ERROR;
     }
+    @ResponseBody
+    @RequestMapping("/searchPaymentItem")
+    public DataGridView searchPaymentItem(){
+        QueryWrapper<PaymentItem> wrapper = new QueryWrapper<PaymentItem>();
+        List<PaymentItem> list =paymentItemService.list(wrapper);
+        return  new DataGridView(list);
+    }
 }

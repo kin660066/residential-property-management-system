@@ -7,7 +7,6 @@ import com.sontan.rpms.common.ResultObj;
 import com.sontan.rpms.entity.User;
 import com.sontan.rpms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,6 +49,7 @@ public class LoginController {
             User user = userService.getOne(queryWrapper);
             if(null!=user) {
                 session.setAttribute("user", user);
+                session.setAttribute("userna", user.getUsername());
                request.getSession().setAttribute("aaa",user);
                 return ResultObj.LOGIN_SUCCESS;
             }else {
@@ -69,5 +69,11 @@ public class LoginController {
         ServletOutputStream outputStream = res.getOutputStream();
         captcha.write(outputStream);
         outputStream.close();
+    }
+    @RequestMapping("chara")
+    @ResponseBody
+    public Integer chara(HttpSession session){
+        User user=(User)session.getAttribute("user");
+        return user.getType();
     }
 }

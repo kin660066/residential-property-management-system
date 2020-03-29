@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+</head>
+<body>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button type="button" class="layui-btn layui-btn-sm" lay-event="getCheckData"><i class="layui-icon"></i></button>
+    </div>
+</script>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+<script type="text/html" id="barDemo">
+    {{#  if(d.state==1){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="edit">绑定业主</a>
+    {{#  } }}
+    {{#  if(d.state==0){ }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">解除绑定</a>
+    {{#  } }}
+</script>
+<script src="../../resources/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.use(['table','jquery','layer','form'], function(){
+        var table = layui.table
+        var layer = layui.layer
+        var $=layui.jquery
+        var form=layui.form
+
+        //渲染车位信息数据表格
+        var tabl=table.render({
+            elem: '#test'
+            ,url:'/parking/parkingInfo'
+            ,title: '车位信息管理'
+            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            ,cols: [
+                [
+                {field:'id', title:'ID',  fixed: 'left',align:'center'}
+                ,{field:'block', title:'栋数' ,fixed: 'left',align:'center'}
+                ,{field:'state', title:'状态' ,fixed: 'left',align:'center',templet:"#state"}
+                ,{field:'no', title:'车位编号' ,fixed: 'left',align:'center'}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:500,align:'center'}
+            ]
+                ],page:true
+        }
+        );
+        //侧边栏
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'edit'){
+                location.href="/parking/toParkingBind?no="+data.no
+            }
+            if(obj.event === 'del'){
+                    console.log(JSON.stringify(data))
+                deleteNotice(data)
+            }
+        });
+        function deleteNotice(data){
+            layer.confirm('你确定要解除绑定吗?', {icon: 3, title:'提示'}, function(index){
+                $.post("/parking/unBindParking",{id:data.id},function(res){
+                    layer.msg(res.msg);
+                })
+                layer.close(index);
+                tabl.reload();
+                form.render()
+            });
+
+        }
+
+
+        });
+</script>
+<script type="text/html" id="state">
+    {{# if (d.state==0) { }}
+    <span>已售或已租</span>
+    {{# } if(d.state==1) { }}  
+    <span>闲置</span>
+    {{# }}}  
+</script>
+</body>
+</html>

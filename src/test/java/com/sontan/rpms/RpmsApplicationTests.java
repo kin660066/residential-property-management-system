@@ -7,6 +7,7 @@ import com.sontan.rpms.dao.UserMapper;
 import com.sontan.rpms.entity.Flat;
 import com.sontan.rpms.entity.User;
 import com.sontan.rpms.service.FlatService;
+import com.sontan.rpms.service.PaymentDetailService;
 import com.sontan.rpms.utils.CardUtil;
 import com.sontan.rpms.utils.RoomNoUtil;
 import com.sontan.rpms.vo.FlatVo;
@@ -23,6 +24,8 @@ class RpmsApplicationTests {
     UserMapper userMapper;
     @Autowired
     FlatService flatService;
+    @Autowired
+    PaymentDetailService paymentDetailService;
     @Test
     void contextLoads() {
         System.out.println(userMapper.selectById(1));
@@ -39,4 +42,9 @@ class RpmsApplicationTests {
         System.out.println(CardUtil.getAge(card1));
         System.out.println(cardUtil.getAge(card2));
         }
+    @Test
+    void test03(){
+        Page page = new Page();
+        System.out.println(paymentDetailService.getFlatVo(page));
+    }
 }

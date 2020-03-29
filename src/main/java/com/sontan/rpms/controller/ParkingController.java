@@ -13,10 +13,14 @@ import com.sontan.rpms.common.ResultObj;
 import com.sontan.rpms.entity.Parking;
 import com.sontan.rpms.entity.PaymentItem;
 import com.sontan.rpms.service.ParkingService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -25,7 +29,7 @@ import java.util.List;
  * @author makejava
  * @since 2020-03-21 15:06:52
  */
-@RestController
+@Controller
 @RequestMapping("parking")
 public class ParkingController extends ApiController {
     /**
@@ -109,5 +113,36 @@ public class ParkingController extends ApiController {
         parkingService.page(page,wrapper);
         List<Parking> list =page.getRecords();
         return  new DataGridView(page.getTotal(),list);
+    }
+    @ResponseBody
+    @RequestMapping("/unBindParking")
+    public ResultObj unBindParking(Integer id) {
+        UpdateWrapper<Parking> wrapper = new UpdateWrapper<>();
+        wrapper.eq("id",id).set("ownerid",null).set("starttime",null).set("endtime",null).set("carno",null).set("state",1);
+        if(parkingService.update(wrapper))
+            return ResultObj.UNBIND_SUCCESS;
+        else
+            return ResultObj.UNBIND_ERROR;
+    }
+    @RequestMapping("/toParkingBind")
+    public String toParkingBind(String no, HttpServletRequest request){
+        request.setAttribute("no",no);
+        return "/page/parking/bindParking.html";
+    }
+    @ResponseBody
+    @RequestMapping("/parkingBind")
+    public ResultObj parkingBind(Integer ownerid,String starttime,String endtime, String carno,String no) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+
+            UpdateWrapper<Parking> wrapper = new UpdateWrapper<>();
+            wrapper.eq("no",no).set("ownerid",ownerid).set("starttime",sdf.parse(starttime))
+                    .set("endtime",sdf.parse(endtime)).set("carno",carno).set("state",0);
+            if(parkingService.update(wrapper))
+                return ResultObj.BIND_SUCCESS;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return ResultObj.BIND_ERROR;
     }
 }

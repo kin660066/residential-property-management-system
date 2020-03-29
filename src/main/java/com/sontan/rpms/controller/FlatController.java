@@ -132,7 +132,6 @@ public class FlatController {
     @RequestMapping("/searchOwner")
     public DataGridView searchOwner(){
         QueryWrapper<User> wrapper = new QueryWrapper<User>();
-        wrapper.select("username");
         List<User> list =userService.list(wrapper);
         return  new DataGridView(list);
     }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author makejava
  * @since 2020-03-21 11:28:27
  */
-@Service("paymentItemService")
+@Service
 public class PaymentItemServiceImpl extends ServiceImpl<PaymentItemDao, PaymentItem> implements PaymentItemService {
 
 }

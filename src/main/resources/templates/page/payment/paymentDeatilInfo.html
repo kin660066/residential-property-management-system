@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+</head>
+<body>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button type="button" class="layui-btn layui-btn-sm"onclick="javascript:window.location.href='/page/payment/addPayment.html'"><i class="layui-icon"></i></button>
+    </div>
+</script>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script src="../../resources/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.use(['table','jquery','layer','form'], function(){
+        var table = layui.table;
+        //渲染缴费项项目数据表格
+        var tabl=table.render({
+            elem: '#test'
+            ,url:'/paymentDetail/paymentDetailList'
+            ,title: '缴费项目项管理'
+            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            ,cols: [
+                [
+                {field:'id', title:'ID',  fixed: 'left',align:'center'}
+                ,{field:'username', title:'业主',  fixed: 'left',align:'center'}
+                ,{field:'months', title:'月份' ,fixed: 'left',align:'center'}
+                ,{field:'item', title:'缴费项目项' ,fixed: 'left',align:'center'}
+                ,{field:'money', title:'缴费金额(元)' ,fixed: 'left',align:'center'}
+                ,{field:'createby', title:'创建人' ,fixed: 'left',align:'center'}
+                ,{field:'createtime', title:'创建时间' ,fixed: 'left',align:'center'}
+                ,{field:'paytime', title:'支付时间' ,fixed: 'left',align:'center'}
+                ,{field:'state', title:'状态' ,fixed: 'left',align:'center',templet:"#state"}
+            ]
+                ],page:true
+        }
+        );
+
+        });
+</script>
+<script type="text/html" id="state">
+    {{# if (d.state==0) { }}
+    <span>未缴费</span>
+    {{# } if(d.state==1) { }}  
+    <span>已缴费</span>
+    {{# }}}  
+</script>
+</body>
+</html>

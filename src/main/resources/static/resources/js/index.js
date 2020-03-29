@@ -9,10 +9,24 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
         element = layui.element;
     $ = layui.$;
     layer = parent.layer === undefined ? layui.layer : top.layer;
-    tab = layui.bodyTab({
-        openTabNum: "50",  //最大可打开窗口数量
-        url: "../resources/json/navs.json" //获取菜单json地址
-    });
+    $.post("/login/chara",function (res) {
+        console.log(res)
+        var type=res;
+        if(type == 1){
+            tab = layui.bodyTab({
+                openTabNum: "50",  //最大可打开窗口数量
+                url: "../resources/json/navs.json" //获取菜单json地址
+            });
+        }else{
+            tab = layui.bodyTab({
+                openTabNum: "50",  //最大可打开窗口数量
+                url: "../resources/json/navs2.json" //获取菜单json地址
+            });
+        }
+        getData("navBar");
+    })
+
+
 
     //通过顶部菜单获取左侧二三级菜单   注：此处只做演示之用，实际开发中通过接口传参的方式获取导航数据
     function getData(json) {
@@ -39,7 +53,7 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
     })
 
     //通过顶部菜单获取左侧二三级菜单   注：此处只做演示之用，实际开发中通过接口传参的方式获取导航数据
-    getData("navBar");
+
 
     // 添加新窗口
     $("body").on("click", ".layui-nav .layui-nav-item a:not('.mobileTopLevelMenus .layui-nav-item a')", function () {
@@ -115,10 +129,10 @@ function donation() {
         area: ['260px', '367px'],
         tab: [{
             title: "微信",
-            content: "<div style='padding:30px;overflow:hidden;background:#d2d0d0;'><img src='images/wechat.jpg'></div>"
+            content: "<div style='padding:30px;overflow:hidden;background:#d2d0d0;'><img src='images/11.jpg'></div>"
         }, {
             title: "支付宝",
-            content: "<div style='padding:30px;overflow:hidden;background:#d2d0d0;'><img src='images/alipay.jpg'></div>"
+            content: "<div style='padding:30px;overflow:hidden;background:#d2d0d0;'><img src='images/12.jpg'></div>"
         }]
     })
 }
