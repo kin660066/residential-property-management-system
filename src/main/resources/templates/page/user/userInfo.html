@@ -61,6 +61,12 @@
 <script type="text/javascript">
     layui.use(['jquery','form'], function(){
         var $=layui.jquery;
+        $.post("/login/ok",function(res){
+            console.log(res)
+            if (res==null||res==""){
+                location.href="../../page/login/login.html"
+            }
+        })
         $("#toModPwd").click(function(){
             var id = $("#id").val();
             location.href="/login/toModPwd"

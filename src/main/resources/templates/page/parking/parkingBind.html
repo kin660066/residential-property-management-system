@@ -27,6 +27,12 @@
         var layer = layui.layer
         var $=layui.jquery
         var form=layui.form
+        $.post("/login/ok",function(res){
+            console.log(res)
+            if (res==null||res==""){
+                location.href="../../page/login/login.html"
+            }
+        })
 
         //渲染车位信息数据表格
         var tabl=table.render({

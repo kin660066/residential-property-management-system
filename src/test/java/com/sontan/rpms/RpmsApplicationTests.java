@@ -11,6 +11,7 @@ import com.sontan.rpms.service.PaymentDetailService;
 import com.sontan.rpms.utils.CardUtil;
 import com.sontan.rpms.utils.RoomNoUtil;
 import com.sontan.rpms.vo.FlatVo;
+import com.sontan.rpms.vo.PaymentVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -47,4 +48,15 @@ class RpmsApplicationTests {
         Page page = new Page();
         System.out.println(paymentDetailService.getFlatVo(page));
     }
+
+    @Test
+    void test05(){
+
+        System.out.println(RoomNoUtil.getRoomNo(1,1,1,1));
+    }    @Test
+    void test06(){
+        Page page = new Page();
+        System.out.println(paymentDetailService.getFlatVo(page));
+    }
+
 }

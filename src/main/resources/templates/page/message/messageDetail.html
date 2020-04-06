@@ -84,6 +84,12 @@
         var form = layui.form;
         var layer=layui.layer
         var $=layui.jquery
+        $.post("/login/ok",function(res){
+            console.log(res)
+            if (res==null||res==""){
+                location.href="../../page/login/login.html"
+            }
+        })
         var id=$("#id").val()
         form.on("submit(add)", function (data) {
             var btn =  $(this);

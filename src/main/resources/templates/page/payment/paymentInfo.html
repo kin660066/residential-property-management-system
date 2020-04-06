@@ -59,6 +59,12 @@
         var layer = layui.layer
         var $=layui.jquery
         var form=layui.form
+        $.post("/login/ok",function(res){
+            console.log(res)
+            if (res==null||res==""){
+                location.href="../../page/login/login.html"
+            }
+        })
         //提交修改信息
         form.on("submit(mod)",function(data){
             $.post("/paymentItem/modPaymentItem",data.field,function(res){

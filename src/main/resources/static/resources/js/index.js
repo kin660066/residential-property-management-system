@@ -7,6 +7,12 @@ layui.config({
 layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
         element = layui.element;
     $ = layui.$;
+    $.post("/login/ok",function(res){
+        console.log(res)
+        if (res==null||res==""){
+            location.href="page/login/login.html"
+        }
+    })
     layer = parent.layer === undefined ? layui.layer : top.layer;
     $.post("/login/chara",function (res) {
         console.log(res)
@@ -22,7 +28,6 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
                 url: "../resources/json/navs3.json" //获取菜单json地址
             });
         }
-
         else{
             tab = layui.bodyTab({
                 openTabNum: "50",  //最大可打开窗口数量

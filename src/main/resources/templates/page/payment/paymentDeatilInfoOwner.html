@@ -32,6 +32,12 @@
         var table = layui.table;
         var form = layui.form;
         var $=layui.jquery;
+        $.post("/login/ok",function(res){
+            console.log(res)
+            if (res==null||res==""){
+                location.href="../../page/login/login.html"
+            }
+        })
         //渲染缴费项项目数据表格
         table.render({
             elem: '#test'

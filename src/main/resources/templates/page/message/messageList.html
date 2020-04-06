@@ -14,6 +14,13 @@
 <script type="text/javascript">
     layui.use(['table','jquery','layer','form'], function(){
         var table = layui.table
+        var $=layui.jquery;
+        $.post("/login/ok",function(res){
+            console.log(res)
+            if (res==null||res==""){
+                location.href="../../page/login/login.html"
+            }
+        })
         table.render({
                 elem: '#test'
                 ,url:'/message/messageInfo'

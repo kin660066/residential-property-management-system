@@ -45,6 +45,12 @@
         var form = layui.form;
         var layedit = layui.layedit;
         var $=layui.jquery
+        $.post("/login/ok",function(res){
+            console.log(res)
+            if (res==null||res==""){
+                location.href="../../page/login/login.html"
+            }
+        })
         //创建一个编辑器
         var index = layedit.build('lay_edit',{
             height: 350

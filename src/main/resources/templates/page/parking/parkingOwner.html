@@ -10,6 +10,13 @@
 <script src="../../resources/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript">
     layui.use(['table','jquery','layer','form'], function(){
+        var $=layui.jquery;
+        $.post("/login/ok",function(res){
+            console.log(res)
+            if (res==null||res==""){
+                location.href="../../page/login/login.html"
+            }
+        })
         var table = layui.table
         //渲染车位信息数据表格
         var tabl=table.render({

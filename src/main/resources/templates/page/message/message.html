@@ -9,10 +9,10 @@
 
 <div style="width:100%;overflow:hidden">
     <div class="layui-btn-container" style="margin:50px 0 20px 100px ;float: left;width: 20%">
-        <a href="/message/toAddMessage1"><button type="button" class="layui-btn" >申报申请家属绑定消息</button></a>
+        <a href="/message/toAddMessage1"><button type="button" class="layui-btn" >申请家属绑定消息</button></a>
     </div>
     <div class="layui-btn-container" style="margin:50px 0 20px 20px;float: left;width: 20% ">
-        <a href="/message/toAddMessage2"><button type="button" class="layui-btn" >申 报 车 位 申 请 消 息</button></a>
+        <a href="/message/toAddMessage2"><button type="button" class="layui-btn" >申请车位绑定消息</button></a>
     </div>
     <div class="layui-btn-container" style="margin:50px 0 20px 20px ;float: left;width: 20%">
         <a href="/message/toAddMessage3"><button type="button" class="layui-btn" >申报公共设备报修消息</button></a>
@@ -27,6 +27,13 @@
 <script type="text/javascript">
     layui.use(['table','jquery','layer','form'], function(){
         var table = layui.table
+        var $=layui.jquery;
+        $.post("/login/ok",function(res){
+            console.log(res)
+            if (res==null||res==""){
+                location.href="../../page/login/login.html"
+            }
+        })
         //渲染车位信息数据表格
         var tabl=table.render({
                 elem: '#test'

@@ -49,6 +49,12 @@
         var $=layui.jquery;
         var form=layui.form;
         var pwd=$("#pwd").val();
+        $.post("/login/ok",function(res){
+            console.log(res)
+            if (res==null||res==""){
+                location.href="../../page/login/login.html"
+            }
+        })
         form.verify({
             oldPwd: function (value, item) {
                 if (value != pwd) {

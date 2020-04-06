@@ -42,7 +42,6 @@ public class LoginController {
     @RequestMapping("/login")
     @ResponseBody
     public ResultObj login(String account, String password, String code, HttpSession session, HttpServletRequest request){
-        System.out.println(code);
         Object codeSession = session.getAttribute("code");
         if(code!=null&&code.equals(codeSession)) {
             QueryWrapper<User> queryWrapper=new QueryWrapper<>();
@@ -114,5 +113,11 @@ public class LoginController {
             return ResultObj.LOGIN_MOD_SUCESS;
         }
         return ResultObj.LOGIN_MOD_ERROR;
+    }
+    @RequestMapping("ok")
+    @ResponseBody
+    public User ok(HttpSession session){
+        User user=(User)session.getAttribute("user");
+        return user;
     }
 }

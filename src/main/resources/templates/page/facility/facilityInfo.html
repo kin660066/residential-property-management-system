@@ -58,6 +58,12 @@
         var layer = layui.layer
         var $=layui.jquery
         var form=layui.form
+        $.post("/login/ok",function(res){
+            console.log(res)
+            if (res==null||res==""){
+                location.href="../../page/login/login.html"
+            }
+        })
         form.on("submit(mod)",function(data){
             $.post("/fac/modFacility",data.field,function(res){
                 if(res.code != 1){

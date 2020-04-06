@@ -49,7 +49,12 @@
         var form = layui.form
             ,layer = layui.layer
             ,$=layui.jquery
-
+            $.post("/login/ok",function(res){
+                console.log(res)
+                if (res==null||res==""){
+                    location.href="../../page/login/login.html"
+                }
+            })
         //监听提交
         form.on("submit(add)", function (data) {
             var btn =  $(this);

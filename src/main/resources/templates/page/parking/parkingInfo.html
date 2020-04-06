@@ -7,9 +7,7 @@
 </head>
 <body>
 <script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button type="button" class="layui-btn layui-btn-sm" lay-event="getCheckData"><i class="layui-icon"></i></button>
-    </div>
+
 </script>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <div id="modDiv" style="display: none;margin: 10px">
@@ -136,6 +134,12 @@
         var layer = layui.layer
         var $=layui.jquery
         var form=layui.form
+        $.post("/login/ok",function(res){
+            console.log(res)
+            if (res==null||res==""){
+                location.href="../../page/login/login.html"
+            }
+        })
         //提交修改信息
         form.on("submit(mod)",function(data){
             console.log(JSON.stringify(data))

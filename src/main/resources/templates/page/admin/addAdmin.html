@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
 </head>
 <body>
+
 <form class="layui-form"  style="margin-top: 20px;margin-left:35%;">
     <div class="layui-form-item">
         <label class="layui-form-label">账号</label>
@@ -63,6 +64,12 @@
         var form = layui.form
             ,layer = layui.layer
             ,$=layui.jquery
+            $.post("/login/ok",function(res){
+                console.log(res)
+                if (res==null||res==""){
+                    location.href="page/login/login.html"
+                }
+            })
 
         //监听提交
         form.on("submit(add)", function (data) {

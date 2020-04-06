@@ -67,6 +67,12 @@
         var $=layui.jquery
         var form=layui.form
         var laydate = layui.laydate;
+        $.post("/login/ok",function(res){
+            console.log(res)
+            if (res==null||res==""){
+                location.href="../../page/login/login.html"
+            }
+        })
         laydate.render({
             elem: '#test1'
         });
