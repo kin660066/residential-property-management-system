@@ -32,4 +32,5 @@ public class User implements Serializable {
     private String card;
     private String createby;
     private Date createtime;
+    private String url;
 }

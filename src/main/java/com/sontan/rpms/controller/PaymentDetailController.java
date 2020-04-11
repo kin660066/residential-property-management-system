@@ -43,9 +43,18 @@ public class PaymentDetailController extends ApiController {
     @ResponseBody
     @RequestMapping("paymentDetailList")
     public DataGridView paymentDetailList(@RequestParam("page")int pageIndex,
-                                     @RequestParam("limit")int pageSize){
+                                     @RequestParam("limit")int pageSize,String username,Integer month){
         Page<PaymentVo> page = new Page<>(pageIndex,pageSize);
-        paymentDetailService.getFlatVo(page);
+        if (username!=null&&month!=null){
+            paymentDetailService.getFlatVo2(page,username,month);
+        }
+        if (username!=null&&month==null){
+            paymentDetailService.getFlatVo3(page,username);
+        }
+        if (username==null&&month!=null){
+            paymentDetailService.getFlatVo4(page,month);
+        }if (username==null&&month==null){
+        paymentDetailService.getFlatVo(page);}
         List<PaymentVo> list =page.getRecords();
         return  new DataGridView(page.getTotal(),list);
     }

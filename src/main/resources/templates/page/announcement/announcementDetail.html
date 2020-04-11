@@ -32,12 +32,15 @@
             <textarea id="lay_edit" name="content" readonly class="layui-textarea" th:text="${content}"></textarea>
         </div>
     </div>
-    <button type="button" style="margin-left: 30% " class="layui-btn layui-btn-normal"><a href="javascript:history.go(-1)">返回</a></button>
+   <button type="button" style="margin-left: 30%" class="layui-btn layui-btn-normal" onclick="a()">返回</button>
 </form>
 
 </div>
 <script src="../../resources/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript">
+    function a(){
+        history.go(-1);
+    }
     layui.use(['layedit', 'form','jquery'], function() {
         var form = layui.form;
         var layedit = layui.layedit;

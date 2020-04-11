@@ -6,15 +6,50 @@
     <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
 </head>
 <body>
+<blockquote class="layui-elem-quote quoteBox">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-input-inline layui-col-xs4 layui-col-sm3 layui-col-md2">
+            <input type="text" name="username" id="username1" placeholder="业主" class="layui-input">
+        </div>
+        <div class="layui-input-inline layui-col-xs4 layui-col-sm3 layui-col-md2">
+            <input type="number" name="month" id="month1" placeholder="月份" class="layui-input">
+        </div>
+        <div class="layui-input-inline layui-col-xs5 layui-col-sm5 layui-col-md8">
+            <button type="button" class="layui-btn layui-btn-normal" onclick="b()">查询</button>
+            <button type="button" class="layui-btn layui-btn-normal" style="float: right" onclick="a()"> + </button>
+        </div>
+    </div>
+</blockquote>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button type="button" class="layui-btn layui-btn-sm"onclick="javascript:window.location.href='/page/payment/addPayment.html'"><i class="layui-icon"></i></button>
     </div>
 </script>
 <table class="layui-hide" id="test" lay-filter="test"></table>
-
+<script src="../../resources/layui/jquery.min.js" ></script>
 <script src="../../resources/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript">
+    function b () {
+        layui.use(['table','jquery'], function(){
+            var table = layui.table;
+            var $=layui.jquery;
+            var username=$("#username1").val()
+            var month=$("#month1").val()
+            table.reload('test', {
+                where: { //设定异步数据接口的额外参数，任意设
+                    month: month,
+                    username: username,
+                }
+                , page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+
+        })
+    }
+    function a(){
+        location.href="/page/payment/addPayment.html";
+    }
     layui.use(['table','jquery','layer','form'], function(){
         var table = layui.table;
         var $=layui.jquery;

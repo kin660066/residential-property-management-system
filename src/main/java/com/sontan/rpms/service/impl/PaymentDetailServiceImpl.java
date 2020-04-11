@@ -17,6 +17,11 @@ import org.springframework.stereotype.Service;
 @Service("paymentDetailService")
 public class PaymentDetailServiceImpl extends ServiceImpl<PaymentDetailDao, PaymentDetail> implements PaymentDetailService {
     @Override
+    public Page<PaymentVo> getFlatVo2(Page<PaymentVo> page, String username, Integer month) {
+        return page.setRecords(this.baseMapper.getPaymentVo2(page,username,month));
+    }
+
+    @Override
     public Page<PaymentVo> getFlatVo(Page<PaymentVo> page) {
         return page.setRecords(this.baseMapper.getPaymentVo(page));
     }
@@ -24,5 +29,15 @@ public class PaymentDetailServiceImpl extends ServiceImpl<PaymentDetailDao, Paym
     @Override
     public Page<PaymentVo> getFlatVo1(Page<PaymentVo> page, Integer id) {
         return page.setRecords(this.baseMapper.getPaymentVo1(page,id));
+    }
+
+    @Override
+    public Page<PaymentVo> getFlatVo3(Page<PaymentVo> page, String username) {
+        return page.setRecords(this.baseMapper.getPaymentVo3(page,username));
+    }
+
+    @Override
+    public Page<PaymentVo> getFlatVo4(Page<PaymentVo> page, Integer month) {
+        return page.setRecords(this.baseMapper.getPaymentVo4(page,month));
     }
 }

@@ -44,9 +44,15 @@ public class OwnerListController {
     @ResponseBody
     @RequestMapping("/OwnerList")
     public DataGridView ownerList(@RequestParam("page")int pageIndex,
-                                  @RequestParam("limit")int pageSize){
+                                  @RequestParam("limit")int pageSize,String no,String username){
         IPage<User> page = new Page<>(pageIndex,pageSize);
         QueryWrapper<User> wrapper=new QueryWrapper<>();
+        if (no!=null){
+        if (!no.equals("")){
+        wrapper.like("account",no);}}
+        if (username!=null){
+        if (!username.equals("")){
+        wrapper.like("username",username);}}
         userService.page(page,wrapper);
         List<User> list =page.getRecords();
         return  new DataGridView(page.getTotal(),list);

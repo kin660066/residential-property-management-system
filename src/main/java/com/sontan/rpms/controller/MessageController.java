@@ -48,11 +48,16 @@ public class MessageController extends ApiController {
     @ResponseBody
     @RequestMapping("/messageInfo")
     public DataGridView messageInfo(@RequestParam("page")int pageIndex,
-                                    @RequestParam("limit")int pageSize,HttpSession session){
+                                    @RequestParam("limit")int pageSize,HttpSession session,String username){
         Page<Message> page = new Page<>(pageIndex,pageSize);
         QueryWrapper<Message> wrapper = new QueryWrapper<>();
         User user =(User)session.getAttribute("user");
-        wrapper.eq("username",user.getUsername());
+        if (user.getType()==0){
+        wrapper.eq("username",user.getUsername());}
+        else{
+            if (username!=null){
+            wrapper.like("username",username);
+        }}
         messageService.page(page,wrapper);
         List<Message> list =page.getRecords();
         return  new DataGridView(page.getTotal(),list);

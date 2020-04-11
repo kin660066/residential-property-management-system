@@ -1,14 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
 </head>
 <body>
-<div class="layui-btn-container" style="margin:50px 0 20px 20px ">
-    <a href="/Owner/toAddOwner"><button type="button" class="layui-btn" >新增业主</button></a>
-</div>
+<span th:text="${aaa}+22222"></span>
+<blockquote class="layui-elem-quote quoteBox">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-input-inline layui-col-xs4 layui-col-sm3 layui-col-md2">
+            <input type="text" name="account" id="account1" placeholder="用户名" class="layui-input">
+        </div>
+        <div class="layui-input-inline layui-col-xs4 layui-col-sm3 layui-col-md2">
+            <input type="text" name="username" id="username1" placeholder="姓名" class="layui-input">
+        </div>
+        <div class="layui-input-inline layui-col-xs5 layui-col-sm5 layui-col-md8">
+            <button type="button" class="layui-btn layui-btn-normal" onclick="b()">查询</button>
+            <button type="button" class="layui-btn layui-btn-normal" style="float: right" onclick="a()">新增</button>
+        </div>
+    </div>
+</blockquote>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <div id="modDiv" style="display: none;margin: 10px">
     <form class="layui-form"  style="margin-top: 20px;margin-left:35%;">
@@ -80,13 +93,39 @@
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
+<script src="../../resources/layui/jquery.min.js" ></script>
 <script src="../../resources/layui/layui.js" charset="utf-8"></script>
+
 <script type="text/javascript">
+    function b () {
+        layui.use(['table','jquery','layer','form'], function(){
+            var table = layui.table;
+            var $=layui.jquery;
+            var acc=$("#account1").val()
+            var use=$("#username1").val()
+            table.reload('test', {
+                where: { //设定异步数据接口的额外参数，任意设
+                    no: acc,
+                    username: use,
+                }
+                , page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+
+        })
+    }
+    function a(){
+        location.href="/Owner/toAddOwner";
+    }
     layui.use(['table','jquery','layer','form'], function(){
         var table = layui.table;
         var layer = layui.layer;
         var $=layui.jquery
         var form=layui.form
+        var acc=$("#account1").val()
+        var use=$("#username1").val()
+
         $.post("/login/ok",function(res){
             console.log(res)
             if (res==null||res==""){
@@ -110,6 +149,10 @@
             elem: '#test'
             ,url:'/Owner/OwnerList'
             ,title: '业主信息'
+            ,where: { //设定异步数据接口的额外参数，任意设
+                    no: acc,
+                    username: use,
+                }
             ,cols: [[
                 {field:'id', title:'ID',  fixed: 'left',align:'center',hide:true}
                 ,{field:'account', title:'用户名' ,fixed: 'left',align:'center'}

@@ -22,13 +22,15 @@
         <div class="layui-input-block">
             <button type="submit" class="layui-btn" lay-submit lay-filter="add">提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            <button type="button" class="layui-btn layui-btn-normal"><a href="javascript:history.go(-1)">返回</a></button>
+            <button type="button" class="layui-btn layui-btn-normal"onclick="a()">返回</button>
         </div>
     </div>
 </form>
 <script src="/resources/layui/layui.js" charset="utf-8"></script>
 <script>
-
+    function a(){
+        history.go(-1);
+    }
     layui.use(['form', 'layedit', 'laydate','jquery'], function(){
         var form = layui.form
             ,layer = layui.layer

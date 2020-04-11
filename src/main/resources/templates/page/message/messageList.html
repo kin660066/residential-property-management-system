@@ -6,12 +6,39 @@
     <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
 </head>
 <body>
+<blockquote class="layui-elem-quote quoteBox">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-input-inline layui-col-xs4 layui-col-sm3 layui-col-md2">
+            <input type="text" name="username" id="username1" placeholder="业主" class="layui-input">
+        </div>
+        <div class="layui-input-inline layui-col-xs5 layui-col-sm5 layui-col-md8">
+            <button type="button" class="layui-btn layui-btn-normal" onclick="b()">查询</button>
+        </div>
+    </div>
+</blockquote>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
 </script>
+<script src="../../resources/layui/jquery.min.js" ></script>
 <script src="../../resources/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript">
+    function b () {
+        layui.use(['table','jquery','layer','form'], function(){
+            var table = layui.table;
+            var $=layui.jquery;
+            var use=$("#username1").val()
+            table.reload('test', {
+                where: { //设定异步数据接口的额外参数，任意设
+                    username: use,
+                }
+                , page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+
+        })
+    }
     layui.use(['table','jquery','layer','form'], function(){
         var table = layui.table
         var $=layui.jquery;
@@ -45,6 +72,7 @@
             )
     });
 </script>
+
 <script type="text/html" id="type">
     {{# if (d.type==0) { }}
     <span>投诉</span>

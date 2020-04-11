@@ -55,7 +55,7 @@
     <div class="layui-form-item">
         <div style="margin: 30px 0 0 100px">
             <button type="submit" class="layui-btn" lay-submit lay-filter="add">添加</button>
-            <button type="button" class="layui-btn layui-btn-normal"><a href="javascript:history.go(-1)">返回</a></button>
+            <button type="button" class="layui-btn layui-btn-normal" onclick="a()">返回</button>
         </div>
     </div>
 </form>
@@ -63,6 +63,9 @@
 
 <script src="/resources/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript">
+    function a(){
+        history.go(-1);
+    }
     layui.use(['form','jquery','laydate'], function() {
         var $=layui.jquery
         var form=layui.form

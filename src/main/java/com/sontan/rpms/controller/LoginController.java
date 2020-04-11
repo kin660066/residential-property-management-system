@@ -52,6 +52,7 @@ public class LoginController {
                 session.setAttribute("user", user);
                 session.setAttribute("userna", user.getUsername());
                request.getSession().setAttribute("aaa",user);
+               request.setAttribute("111","111");
                 return ResultObj.LOGIN_SUCCESS;
             }else {
                 return ResultObj.LOGIN_ERROR_ACCOUNTORPWD;
@@ -106,9 +107,9 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping("/modPwd")
-    public ResultObj modPwd(String pwd1,Integer id){
+    public ResultObj modPwd(String pwd1,Integer id,String images){
         UpdateWrapper<User> wrapper = new UpdateWrapper<>();
-        wrapper.set("password",pwd1).eq("id",id);
+        wrapper.set("password",pwd1).set("url",images).eq("id",id);
         if(userService.update(wrapper)){
             return ResultObj.LOGIN_MOD_SUCESS;
         }
@@ -119,5 +120,11 @@ public class LoginController {
     public User ok(HttpSession session){
         User user=(User)session.getAttribute("user");
         return user;
+    }
+    @RequestMapping("url")
+    @ResponseBody
+    public String url(HttpSession session){
+        User user=(User)session.getAttribute("user");
+        return user.getUrl();
     }
 }

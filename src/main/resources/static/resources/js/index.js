@@ -7,6 +7,13 @@ layui.config({
 layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
         element = layui.element;
     $ = layui.$;
+    $.post("/login/url",function(res){
+        $('#im1').attr("src", res);
+        $('#im2').attr("src", res);
+        })
+    $.post("/login/ok",function(res){
+        $('#name').attr("th:value", res.name);
+    })
     $.post("/login/ok",function(res){
         console.log(res)
         if (res==null||res==""){

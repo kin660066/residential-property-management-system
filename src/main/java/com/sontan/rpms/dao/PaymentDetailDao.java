@@ -23,5 +23,11 @@ public interface PaymentDetailDao extends BaseMapper<PaymentDetail> {
     List<PaymentVo> getPaymentVo(IPage<PaymentVo> page);
     @Select("SELECT ui.username,pi.item,pd.* from payment_detail pd LEFT JOIN payment_item pi on pd.pid=pi.id LEFT JOIN user_info ui on pd.ownerid=ui.id where ui.id= #{id}")
     List<PaymentVo> getPaymentVo1(IPage<PaymentVo> page,Integer id);
+    @Select("SELECT ui.username,pi.item,pd.* from payment_detail pd LEFT JOIN payment_item pi on pd.pid=pi.id LEFT JOIN user_info ui on pd.ownerid=ui.id where ui.username like '%${username}%' and pd.months=#{month}")
+    List<PaymentVo> getPaymentVo2(IPage<PaymentVo> page,String username,Integer month);
+    @Select("SELECT ui.username,pi.item,pd.* from payment_detail pd LEFT JOIN payment_item pi on pd.pid=pi.id LEFT JOIN user_info ui on pd.ownerid=ui.id where ui.username like '%${username}%'  ")
+    List<PaymentVo> getPaymentVo3(IPage<PaymentVo> page,String username);
+    @Select("SELECT ui.username,pi.item,pd.* from payment_detail pd LEFT JOIN payment_item pi on pd.pid=pi.id LEFT JOIN user_info ui on pd.ownerid=ui.id where pd.months=#{month}")
+    List<PaymentVo> getPaymentVo4(IPage<PaymentVo> page,Integer month);
 
 }

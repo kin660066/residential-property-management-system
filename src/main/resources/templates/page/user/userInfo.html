@@ -7,7 +7,9 @@
 </head>
 <body>
 <div style="margin: 30px">
-    <form class="layui-form" action="">
+
+        <div class="layui-form-item" style="display: flex;justify-content: center;align-items: center;  ">
+            <img class="layui-upload-img" style="border-radius: 100px;width:200px;height:200px;" id="userFace" src=""></div>
         <div class="layui-form-item">
             <label class="layui-form-label">账号</label>
             <div class="layui-input-block">
@@ -50,17 +52,24 @@
                 <input type="text" name="address" readonly class="layui-input" th:value="${age}">
             </div>
         </div>
-    </form>
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn " id="toModPwd">修改密码</button>
+
         </div>
     </div>
 </div>
+<script src="../../resources/layui/jquery.min.js" ></script>
 <script src="../../resources/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript">
+    function a(){
+        history.go(-1);
+    }
     layui.use(['jquery','form'], function(){
         var $=layui.jquery;
+        $.post("/login/url",function(res){
+            $('#userFace').attr("src", res);
+        })
         $.post("/login/ok",function(res){
             console.log(res)
             if (res==null||res==""){

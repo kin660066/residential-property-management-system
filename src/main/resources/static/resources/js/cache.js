@@ -27,10 +27,10 @@ layui.use(['form', 'jquery', "layer"], function () {
         layer.open({
             type: 1,
             title: "系统公告",
-            area: '300px',
+            area: '800px',
             shade: 0.8,
             id: 'LAY_layuipro',
-            btn: ['火速围观'],
+            btn: ['确认'],
             moveType: 1,
             content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;"><p class="layui-red">关于加强住宅小区疫情防控工作的通告。</p></pclass></p><p>为全力做好新型冠状病毒感染的肺炎疫情防控工作，有效阻断疫情传播，切实保证小区居民的生命健康安全和正常生产生活秩序，根据市新型冠状病毒感染的肺炎疫情防控应急指挥部的工作要求，现就疫情防控期间有关事项通告如下：\n' +
                 '\n' +
@@ -88,7 +88,7 @@ layui.use(['form', 'jquery', "layer"], function () {
             title: false,
             type: 1,
             content: '<div class="admin-header-lock" id="lock-box">' +
-                '<div class="admin-header-lock-img"><img src="images/face.jpg" class="userAvatar"/></div>' +
+                // '<div class="admin-header-lock-img"><img src="" class="userAvatar"/></div>' +
                 '<div class="admin-header-lock-name" id="lockUserName">用户</div>' +
                 '<div class="input_btn">' +
                 '<input type="password" class="admin-header-lock-input layui-input" autocomplete="off" placeholder="请输入密码解锁.." name="lockPwd" id="lockPwd" />' +
