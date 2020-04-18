@@ -7,6 +7,8 @@ import com.sontan.rpms.vo.FlatVo;
 import com.sontan.rpms.vo.PaymentVo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * (PaymentDetail)表服务接口
  *
@@ -20,4 +22,7 @@ public interface PaymentDetailService extends IService<PaymentDetail> {
     Page<PaymentVo> getFlatVo4(Page<PaymentVo> page,Integer month);
     Page<PaymentVo> getFlatVo(Page<PaymentVo> page);
     Page<PaymentVo> getFlatVo1(Page<PaymentVo> page,Integer id);
+    List<String> getStatistics(String year);
+    List<String> statisticsKinds(String year,Integer pid);
+    List<String> getMonths();
 }

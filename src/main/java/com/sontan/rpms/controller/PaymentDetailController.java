@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -62,9 +63,12 @@ public class PaymentDetailController extends ApiController {
     @RequestMapping("/addPaymentDetail")
     public ResultObj addPaymentDetail(PaymentDetail paymentDetail, HttpSession session){
         String username = (String)session.getAttribute("userna");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
         paymentDetail.setCreateby(username);
         paymentDetail.setCreatetime(new Date());
         paymentDetail.setState(0);
+        paymentDetail.setYear(sdf.format(date));
         if(paymentDetailService.save(paymentDetail)){
             return ResultObj.LOGIN_ADD_SUCESS;}
         return ResultObj.LOGIN_ADD_ERROR;

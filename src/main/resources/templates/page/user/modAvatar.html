@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+</head>
+<body>
+<div style="margin: 30px">
+    <form class="layui-form" action="">
+        <input id="id" name="id" type="hidden" th:value="${id}">
+        <input id="pwd" name="pwd" type="hidden" th:value="${pwd}">
+        <input type="hidden" name="images" class="image">
+        <div class="layui-form-item">
+            <label class="layui-form-label ">照片:</label>
+            <div class="layui-upload">
+                <button type="button" class="layui-btn" id="test1">上传图片</button>
+                <div class="layui-upload-list">
+                    <div class="layui-form-item"  style="display: flex;justify-content: center;align-items: center;">
+                    <img class="layui-upload-img" style="border-radius: 100px;width:200px;height:200px;" id="demo1">
+                    <p id="demoText"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="add">立即修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <button type="button" class="layui-btn layui-btn-normal"onclick="a()">返回</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<script src="../../resources/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    function a(){
+        history.go(-1);
+    }
+    layui.use(['jquery','form','upload'], function(){
+        var $=layui.jquery;
+        var form=layui.form;
+        var upload=layui.upload
+        var pwd=$("#pwd").val();
+        $.post("/login/ok",function(res){
+            console.log(res)
+            if (res==null||res==""){
+                location.href="../../page/login/login.html"
+            }
+        })
+        //监听提交
+        form.on("submit(add)", function (data) {
+            var btn =  $(this);
+            $(this).text("修改中...").attr("disabled", "disabled").addClass("layui-disabled");
+            //设置登录按钮  为不可点击
+            btn.text("添加中...").attr("disabled","disabled").addClass("layui-disabled");
+            $.post("/login/modAvatar",data.field,function(rs){
+                //设置登录按钮 恢复可点击   在前端防止 重复点击
+                console.log("修改中...")
+                btn.text("修改").attr("disabled",false).removeClass("layui-disabled");
+                layer.msg(rs.msg);
+                if(rs.code != 1){
+                    layer.msg(rs.msg);
+                }else{
+                    //跳转到templates/list.html页面
+                    sessionStorage.clear();
+                    top.location.href="/page/login/login.html";
+                }
+            });
+        })
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            ,url: '/up/upload/'
+            ,accept:'images'
+            ,size:50000
+            ,before: function(obj){
+
+                obj.preview(function(index, file, result){
+
+                    $('#demo1').attr('src', result);
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #4cae4c;">上传成功</span>');
+
+                var fileupload = $(".image");
+                fileupload.attr("value",res.data.src);
+                console.log(fileupload.attr("value"));
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+
+    });
+</script>
+
+
+</body>
+</html>

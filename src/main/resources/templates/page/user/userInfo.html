@@ -54,11 +54,12 @@
         </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
+        <div class="layui-input-block">
             <button class="layui-btn " id="toModPwd">修改密码</button>
-
+            <button class="layui-btn " id="toModAvatar">更换头像</button>
         </div>
     </div>
-</div>
+   </div>
 <script src="../../resources/layui/jquery.min.js" ></script>
 <script src="../../resources/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript">
@@ -79,6 +80,10 @@
         $("#toModPwd").click(function(){
             var id = $("#id").val();
             location.href="/login/toModPwd"
+        })
+        $("#toModAvatar").click(function(){
+            var id = $("#id").val();
+            location.href="/login/tomodAvatar"
         })
     });
 </script>

@@ -8,6 +8,8 @@ import com.sontan.rpms.service.PaymentDetailService;
 import com.sontan.rpms.vo.PaymentVo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * (PaymentDetail)表服务实现类
  *
@@ -39,5 +41,20 @@ public class PaymentDetailServiceImpl extends ServiceImpl<PaymentDetailDao, Paym
     @Override
     public Page<PaymentVo> getFlatVo4(Page<PaymentVo> page, Integer month) {
         return page.setRecords(this.baseMapper.getPaymentVo4(page,month));
+    }
+
+    @Override
+    public List<String> getStatistics(String year) {
+        return  this.baseMapper.getStatistics(year);
+    }
+
+    @Override
+    public List<String> getMonths() {
+        return this.baseMapper.getMonths();
+    }
+
+    @Override
+    public List<String> statisticsKinds(String year,Integer pid) {
+        return this.baseMapper.statisticsKinds(year,pid);
     }
 }

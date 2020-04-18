@@ -6,6 +6,8 @@ import com.sontan.rpms.entity.PaymentItem;
 import com.sontan.rpms.service.PaymentItemService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * (PaymentItem)表服务实现类
  *
@@ -14,5 +16,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PaymentItemServiceImpl extends ServiceImpl<PaymentItemDao, PaymentItem> implements PaymentItemService {
-
+    @Override
+    public List<String> getPaymentItem() {
+        return this.baseMapper.getPaymentItem();
+    }
 }

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN" >
+<head>
+    <meta charset="utf-8">
+    <title>首页--小区物业管理系统</title>
+    <script type="text/javascript" src="../../resources/layui/echarts.min.js"></script>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+    <script src="../../resources/layui/jquery.min.js" ></script>
+    <script src="../../resources/layui/layui.js" charset="utf-8"></script>
+</head>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div  style="height:60px;">
+    <div class="layui-btn-group" style="margin-top: 20px;margin-right:30px;float: right">
+        <button  type="button" onclick="a()" class="layui-btn" >2019</button>
+        <button  type="button" onclick="b()" class="layui-btn">2020</button>
+    </div>
+</div>
+<div id="main" style="width: 1200px;height:500px;margin-left: 30px"></div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    // 指定图表的配置项和数据
+    option = {
+        color: ['#3398DB'],
+        title:{
+            text:'缴费统计图'
+        },
+        xAxis: {
+            type: 'category',
+            data: months
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: list,
+            type: 'bar'
+        }],
+        tooltip: {
+            trigger: 'axis'
+        },toolbox: {
+            show: true,
+            feature: {
+                saveAsImage: {
+                    show:true}
+            }
+        }
+    };
+    myChart.setOption(option);
+    myChart.showLoading({
+        text : '正在加载数据'
+    }); //增加提示
+    var list;    //类别数组（实际用来盛放X轴坐标值）
+    var months;
+    //function中echarts部分代码
+    myChart .hideLoading();  //提示关闭
+    // 使用刚指定的配置项和数据显示图表。
+    $.ajax({
+        type : "post",
+        async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+        url : "/statistics//statistics",    //请求发送到TestServlet处
+        data : {},
+        dataType : "json",        //返回数据形式为json
+        success : function(result) {
+            //请求成功时执行该函数内容，result即为服务器返回的json对象
+            if (result) {
+                list=result.list
+                months=result.months
+                myChart.hideLoading();    //隐藏加载动画
+                myChart.setOption({        //加载数据图表
+                    xAxis: {
+                        data: months,
+                        name:'月份'
+                    },
+                    series: [{
+                        // 根据名字对应到相应的系列
+                        name: '金额（元）',
+                        data: list
+                    }]
+                });
+
+            }
+        },
+        error : function(errorMsg) {
+            //请求失败时执行该函数
+            alert("图表请求数据失败!");
+            myChart.hideLoading();
+        }
+    })
+    function  a(){
+        $.ajax({
+            type : "post",
+            async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+            url : "/statistics/statistics",    //请求发送到TestServlet处
+            data : {year:2019},
+            dataType : "json",        //返回数据形式为json
+            success : function(result) {
+                //请求成功时执行该函数内容，result即为服务器返回的json对象
+                if (result) {
+                    list=result.list
+                    months=result.months
+                    myChart.hideLoading();    //隐藏加载动画
+                    myChart.setOption({        //加载数据图表
+                        xAxis: {
+                            data: months,
+                            name:'月份'
+                        },
+                        series: [{
+                            // 根据名字对应到相应的系列
+                            name: '金额（元）',
+                            data: list
+                        }]
+                    });
+
+                }
+            },
+            error : function(errorMsg) {
+                //请求失败时执行该函数
+                alert("图表请求数据失败!");
+                myChart.hideLoading();
+            }
+        })
+}
+    function  b(){
+        $.ajax({
+            type : "post",
+            async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+            url : "/statistics/statistics",    //请求发送到TestServlet处
+            data : {year:2020},
+            dataType : "json",        //返回数据形式为json
+            success : function(result) {
+                //请求成功时执行该函数内容，result即为服务器返回的json对象
+                if (result) {
+                    list=result.list
+                    months=result.months
+                    myChart.hideLoading();    //隐藏加载动画
+                    myChart.setOption({        //加载数据图表
+                        xAxis: {
+                            data: months,
+                            name:'月份'
+                        },
+                        series: [{
+                            // 根据名字对应到相应的系列
+                            name: '金额（元）',
+                            data: list
+                        }]
+                    });
+
+                }
+            },
+            error : function(errorMsg) {
+                //请求失败时执行该函数
+                alert("图表请求数据失败!");
+                myChart.hideLoading();
+            }
+        })
+    }
+</script>
+
+
+</body>
+
+</html>

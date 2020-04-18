@@ -49,6 +49,16 @@
           "icon": "&#xe609;",
           "href": "page/payment/paymentDeatilInfo.html",
           "spread": false
+        },{
+          "title": "缴费统计",
+          "icon": "icon-text",
+          "href": "/page/statistics/statistics.html",
+          "spread": false
+        },{
+          "title": "缴费项目统计",
+          "icon": "icon-text",
+          "href": "/page/statistics/statistics2.html",
+          "spread": false
         }
       ]
     },{
@@ -105,7 +115,8 @@
       "icon": "icon-text",
       "href": "/page/message/messageList.html",
       "spread": false
-    },{
+    },
+    {
       "title": "管理员设置",
       "icon": "icon-text",
       "href": "/page/admin/adminInfo.html",

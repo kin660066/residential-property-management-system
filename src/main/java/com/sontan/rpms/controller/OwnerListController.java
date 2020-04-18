@@ -78,6 +78,7 @@ public class OwnerListController {
       if (user.getCard()!=null){
       user.setAge(CardUtil.getAge(user.getCard()));}
       user.setCreatetime(new Date());
+      user.setUrl("/resources/images/22.jpg");
       QueryWrapper<User> wrapper = new QueryWrapper<>();
       wrapper.eq("account", user.getAccount()).or().eq("username", user.getUsername());
       if (userService.getOne(wrapper) != null) {
@@ -206,6 +207,11 @@ public class OwnerListController {
             return ResultObj.DELETE_ERROR;
     }
 
+    /**
+     * 更新业主
+     * @param user
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/updataUser")
     public ResultObj updataUser(User user){

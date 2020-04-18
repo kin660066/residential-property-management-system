@@ -42,6 +42,8 @@ public class PaymentDetail extends Model<PaymentDetail> {
 
     private Date paytime;
 
+    private String year;
+
 
 
 }

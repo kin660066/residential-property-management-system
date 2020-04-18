@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN" >
+<head>
+    <meta charset="utf-8">
+    <title>首页--小区物业管理系统</title>
+    <script type="text/javascript" src="../../resources/layui/echarts.min.js"></script>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css"  media="all">
+    <script src="../../resources/layui/jquery.min.js" ></script>
+    <script src="../../resources/layui/layui.js" charset="utf-8"></script>
+</head>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div  style="height:60px;">
+    <div class="layui-btn-group" style="margin-top: 20px;margin-right:30px;float: right">
+        <button  type="button" onclick="a()" class="layui-btn" >2019</button>
+        <button  type="button" onclick="b()" class="layui-btn">2020</button>
+    </div>
+</div>
+<div id="main" style="width: 1200px;height:500px;margin-left: 30px"></div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    var months;
+    var item1;
+    var tmp=[];
+    //function中echarts部分代码
+    myChart .hideLoading();  //提示关闭
+    // 使用刚指定的配置项和数据显示图表。
+    // 指定图表的配置项和数据
+    $.ajax({
+        type : "post",
+        async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+        url : "/statistics/statisticsKinds",    //请求发送到TestServlet处
+        data : {},
+        dataType : "json",        //返回数据形式为json
+        success : function(result) {
+            //请求成功时执行该函数内容，result即为服务器返回的json对象
+            if (result) {
+                item1 =result.item
+                var list1 =result.list
+                months = result.months
+                for(var j=0;j<list1.length;j++){
+                    temp = {
+                        name: item1[j],
+                        type: "line",
+                        data: list1[j]
+                    };
+                    tmp.push(temp)
+                }
+                console.log(tmp)
+                //option.series.push(temp);
+                months=result.months
+                option = {
+                    title: {
+                        text: '缴费项金额统计',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                    },
+                    legend: {
+                        left: 'left',
+                        data: item1
+                    },
+                    xAxis: {
+                        type: 'category',
+                        name: '月份',
+                        splitLine: {show: false},
+                        data: months
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    yAxis: {
+                        type: 'log',
+                        name: '金额',
+                        minorTick: {
+                            show: true
+                        },
+                        minorSplitLine: {
+                            show: true
+                        }
+                    },toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                show:true}
+                        }
+                    },
+                    series: tmp
+                };
+                myChart.hideLoading();    //隐藏加载动画
+                myChart.setOption(option,true);
+
+            }
+        },
+        error : function(errorMsg) {
+            //请求失败时执行该函数
+            alert("图表请求数据失败!");
+            myChart.hideLoading();
+        }
+    })
+
+
+
+    function  a(){
+        months =[];
+        item1=[];
+        tmp=[];
+        $.ajax({
+            type : "post",
+            async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+            url : "/statistics/statisticsKinds",    //请求发送到TestServlet处
+            data : {year:2019},
+            dataType : "json",        //返回数据形式为json
+            success : function(result) {
+                //请求成功时执行该函数内容，result即为服务器返回的json对象
+                if (result) {
+                    item1 =result.item
+                    var list1 =result.list
+                    months = result.months
+                    for(var j=0;j<list1.length;j++){
+                        temp = {
+                            name: item1[j],
+                            type: "line",
+                            data: list1[j]
+                        };
+                        tmp.push(temp)
+                    }
+                    console.log(tmp)
+                    //option.series.push(temp);
+                    months=result.months
+                    option = {
+                        title: {
+                            text: '缴费项金额统计',
+                            left: 'center'
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                        },
+                        legend: {
+                            left: 'left',
+                            data: item1
+                        },
+                        xAxis: {
+                            type: 'category',
+                            name: '月份',
+                            splitLine: {show: false},
+                            data: months
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        yAxis: {
+                            type: 'log',
+                            name: '金额',
+                            minorTick: {
+                                show: true
+                            },
+                            minorSplitLine: {
+                                show: true
+                            }
+                        },toolbox: {
+                            show: true,
+                            feature: {
+                                saveAsImage: {
+                                    show:true}
+                            }
+                        },
+                        series: tmp
+                    };
+                    myChart.hideLoading();    //隐藏加载动画
+                    myChart.clear()
+                    myChart.setOption(option,true);
+
+                }
+            },
+            error : function(errorMsg) {
+                //请求失败时执行该函数
+                alert("图表请求数据失败!");
+                myChart.hideLoading();
+            }
+        })
+}
+    function  b(){
+        months =[];
+        item1=[];
+        tmp=[];
+        $.ajax({
+            type : "post",
+            async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+            url : "/statistics/statisticsKinds",    //请求发送到TestServlet处
+            data : {year:2020},
+            dataType : "json",        //返回数据形式为json
+            success : function(result) {
+                //请求成功时执行该函数内容，result即为服务器返回的json对象
+                if (result) {
+                    item1 =result.item
+                    var list1 =result.list
+                    months = result.months
+                    for(var j=0;j<list1.length;j++){
+                        temp = {
+                            name: item1[j],
+                            type: "line",
+                            data: list1[j]
+                        };
+                        tmp.push(temp)
+                    }
+                    console.log(tmp)
+                    months=result.months
+                    option = {
+                        title: {
+                            text: '缴费项金额统计',
+                            left: 'center'
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                        },
+                        legend: {
+                            left: 'left',
+                            data: item1
+                        },
+                        xAxis: {
+                            type: 'category',
+                            name: '月份',
+                            splitLine: {show: false},
+                            data: months
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        yAxis: {
+                            type: 'log',
+                            name: '金额',
+                            minorTick: {
+                                show: true
+                            },
+                            minorSplitLine: {
+                                show: true
+                            }
+                        },toolbox: {
+                            show: true,
+                            feature: {
+                                saveAsImage: {
+                                    show:true}
+                            }
+                        },
+                        series: tmp
+                    };
+                    myChart.hideLoading();    //隐藏加载动画
+                    myChart.clear()
+                    myChart.setOption(option,true);
+
+                }
+            },
+            error : function(errorMsg) {
+                //请求失败时执行该函数
+                alert("图表请求数据失败!");
+                myChart.hideLoading();
+            }
+        })
+    }
+</script>
+
+
+</body>
+
+</html>

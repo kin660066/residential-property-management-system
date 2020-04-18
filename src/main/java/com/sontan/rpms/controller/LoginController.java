@@ -97,6 +97,12 @@ public class LoginController {
         model.addAttribute("card",user.getCard());
         return "page/user/userInfo.html";
     }
+    @RequestMapping("tomodAvatar")
+    public String tomodAvatar( HttpSession session, ModelMap model){
+        User user = (User)session.getAttribute("user");
+        model.addAttribute("id",user.getId());
+        return "/page/user/modAvatar.html";
+    }
     @RequestMapping("toModPwd")
     public String toModPwd( HttpSession session, ModelMap model){
         User user = (User)session.getAttribute("user");
@@ -107,9 +113,19 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping("/modPwd")
-    public ResultObj modPwd(String pwd1,Integer id,String images){
+    public ResultObj modPwd(String pwd1,Integer id){
         UpdateWrapper<User> wrapper = new UpdateWrapper<>();
-        wrapper.set("password",pwd1).set("url",images).eq("id",id);
+        wrapper.set("password",pwd1).eq("id",id);
+        if(userService.update(wrapper)){
+            return ResultObj.LOGIN_MOD_SUCESS;
+        }
+        return ResultObj.LOGIN_MOD_ERROR;
+    }
+    @ResponseBody
+    @RequestMapping("/modAvatar")
+    public ResultObj modAvatar(Integer id,String images){
+        UpdateWrapper<User> wrapper = new UpdateWrapper<>();
+        wrapper.set("url",images).eq("id",id);
         if(userService.update(wrapper)){
             return ResultObj.LOGIN_MOD_SUCESS;
         }
